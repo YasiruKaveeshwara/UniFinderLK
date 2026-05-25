@@ -20,7 +20,7 @@ export default function Footer() {
 
 	const platformLinks = [
 		{ label: "Home", href: "/" },
-		{ label: "Degree Recommendations", href: "/degree-recommendations" },
+		{ label: "Degree Recommendations", href: "/#pathways-section" },
 	];
 
 	const legalLinks = [
@@ -33,7 +33,7 @@ export default function Footer() {
 	return (
 		<footer
 			id='site-footer'
-			className='w-full mt-auto border-t shadow-[0_-8px_30px_-5px_rgba(14,165,233,0.08)] border-slate-200/70 bg-gradient-to-br from-slate-50 via-white to-cyan-50/60'>
+			className='w-full mt-auto border-t shadow-[0_-8px_30px_-5px_rgba(14,165,233,0.12)] border-sky-100/80 bg-gradient-to-br from-sky-50 via-cyan-50 to-emerald-50/80'>
 			<div className='px-4 mx-auto max-w-7xl sm:px-6 lg:px-8'>
 				<div className='grid grid-cols-1 gap-10 py-14 md:grid-cols-3 lg:gap-16'>
 					<div className='space-y-5'>

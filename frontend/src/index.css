@@ -4,6 +4,41 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
+#root {
+	min-height: 100%;
+	margin: 0;
+}
+
+body {
+	font-family:
+		"Inter",
+		system-ui,
+		-apple-system,
+		sans-serif;
+	background:
+		radial-gradient(circle at top left, rgba(186, 230, 253, 0.72), transparent 28%),
+		radial-gradient(circle at top right, rgba(167, 243, 208, 0.58), transparent 24%),
+		radial-gradient(circle at bottom left, rgba(125, 211, 252, 0.34), transparent 26%),
+		linear-gradient(180deg, #f3fbff 0%, #e9f9f2 100%);
+	color: #0f172a;
+}
+
+body.homepage {
+	background:
+		radial-gradient(circle at top left, rgba(186, 230, 253, 0.84), transparent 26%),
+		radial-gradient(circle at 80% 20%, rgba(153, 246, 228, 0.7), transparent 20%),
+		radial-gradient(circle at bottom right, rgba(167, 243, 208, 0.48), transparent 24%),
+		linear-gradient(180deg, #f0fbff 0%, #e3f8ef 100%);
+}
+
+body.non-homepage {
+	background:
+		radial-gradient(circle at top left, rgba(186, 230, 253, 0.38), transparent 28%),
+		linear-gradient(180deg, #f7fcff 0%, #f0fbf5 100%);
+}
+
 /* ───────────── Design Tokens ───────────── */
 :root {
 	--color-primary: #4f46e5;

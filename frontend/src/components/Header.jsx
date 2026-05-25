@@ -20,21 +20,13 @@ const CloseIcon = () => (
 );
 
 export default function Header() {
-	const [scrolled, setScrolled] = useState(false);
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	const location = useLocation();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const currentUser = useSelector((state) => state.user?.currentUser);
-	const isHomePage = location.pathname === "/";
 	const isLoggedIn = Boolean(currentUser);
 	const API_BASE = process.env.REACT_APP_BACKEND_URL;
-
-	useEffect(() => {
-		const handleScroll = () => setScrolled(window.scrollY > 24);
-		window.addEventListener("scroll", handleScroll, { passive: true });
-		return () => window.removeEventListener("scroll", handleScroll);
-	}, []);
 
 	useEffect(() => {
 		setMobileMenuOpen(false);
@@ -52,10 +44,10 @@ export default function Header() {
 
 	const navLinks = [
 		{ label: "Home", href: "/" },
-		{ label: "Degrees", href: "/degree-recommendations" },
+		{ label: "Degrees", href: "/#pathways-section" },
 	];
 
-	const isTransparent = isHomePage && !scrolled;
+	const isTransparent = false;
 	const isActive = (path) => location.pathname === path;
 
 	return (
@@ -64,7 +56,7 @@ export default function Header() {
 			className={`fixed top-0 z-50 w-full transition-all duration-300 ${
 				isTransparent ?
 					"bg-slate-950/35 backdrop-blur-md shadow-sm"
-				:	"bg-white/90 backdrop-blur-xl shadow-sm border-b border-slate-200/70"
+				:	"bg-sky-100/95 backdrop-blur-xl shadow-sm border-b border-sky-200/80"
 			}`}>
 			<div className='px-4 mx-auto max-w-7xl sm:px-6 lg:px-8'>
 				<div className='flex items-center justify-between h-16'>
@@ -166,7 +158,7 @@ export default function Header() {
 			</div>
 
 			{mobileMenuOpen && (
-				<div className='border-t md:hidden border-slate-200/70 bg-white/95 backdrop-blur-xl'>
+				<div className='border-t md:hidden border-sky-100/70 bg-sky-50/95 backdrop-blur-xl'>
 					<div className='px-4 py-3 space-y-1'>
 						{navLinks.map((link) => (
 							<Link

@@ -70,7 +70,7 @@ export default function ALWizardFlow() {
 	};
 
 	const handleBack = () => {
-		if (currentStep === 0) navigate("/degree-recommendations");
+		if (currentStep === 0) navigate("/");
 		else if (currentStep === 3) {
 			setResults(null);
 			setCurrentStep(0);

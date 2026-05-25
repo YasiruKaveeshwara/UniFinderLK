@@ -201,7 +201,7 @@ export default function OLResultsPage() {
 						<RefreshIcon className='w-4 h-4' /> Explore Again
 					</button>
 					<button
-						onClick={() => navigate("/degree-recommendations")}
+						onClick={() => navigate("/")}
 						className='inline-flex items-center gap-2 px-6 py-3.5 font-medium transition-colors bg-white border shadow-sm rounded-xl text-slate-600 border-slate-200 hover:bg-slate-50'>
 						<ArrowLeftIcon /> Back to Main Menu
 					</button>

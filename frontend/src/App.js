@@ -5,7 +5,6 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/Signin";
-import DegreeHome from "./pages/DegreeHome";
 import ALWizardFlow from "./pages/ALWizardFlow";
 import OLExplorerFlow from "./pages/OLExplorerFlow";
 import OLResultsPage from "./pages/OLResultsPage";
@@ -25,12 +24,12 @@ function AppContent() {
 	}, [isHomePage]);
 
 	return (
-		<div className='flex flex-col min-h-screen'>
+		<div className='flex flex-col min-h-screen bg-gradient-to-b from-sky-100 via-sky-50 to-emerald-100/80'>
 			<Header />
-			<main className='flex-grow'>
+			<main className='flex-grow bg-transparent'>
 				<Routes>
 					<Route path='/' element={<HomePage />} />
-					<Route path='/degree-recommendations' element={<DegreeHome />} />
+					<Route path='/degree-recommendations' element={<Navigate to='/' replace />} />
 					<Route path='/degree-recommendations/al-students' element={<ALWizardFlow />} />
 					<Route path='/degree-recommendations/all-students' element={<OLExplorerFlow />} />
 					<Route path='/degree-recommendations/ol-results' element={<OLResultsPage />} />
