@@ -1,0 +1,17 @@
+.App {
+	text-align: center;
+}
+
+.keyword-buttons button {
+	padding: 10px 20px;
+	font-size: 16px;
+	cursor: pointer;
+	border: none;
+	border-radius: 5px;
+	background-color: #007bff;
+	color: white;
+}
+
+.keyword-buttons button:hover {
+	background-color: #0056b3;
+}
