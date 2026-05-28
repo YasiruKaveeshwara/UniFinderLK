@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchAllDegreeCourses, fetchOLCareerTree } from "../api/degreeRecommendationApi";
+import { fetchAllDegreeCourses, fetchOLCareerTree } from "../api/DegreeAPI";
 import olSubjectsConfig from "../config/ol_subjects_config.json";
 import LoadingState, { OL_STAGES } from "../components/LoadingState";
 

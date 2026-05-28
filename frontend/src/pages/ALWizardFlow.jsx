@@ -8,7 +8,7 @@ import ZScoreStep from "../components/al/ZScoreStep";
 import InterestsStep from "../components/al/InterestsStep";
 import ALResultsSummary from "../components/al/ALResultsSummary";
 import { AL_STREAMS, getSubjectRuleError } from "../constants/degreeConstants";
-import { fetchDegreeRecommendations } from "../api/degreeRecommendationApi";
+import { fetchDegreeRecommendations } from "../api/DegreeAPI";
 import { ArrowRightIcon, ArrowLeftIcon, SpinnerIcon, GraduationIcon, RefreshIcon } from "../components/ui/Icons";
 
 const STEPS = ["Stream & District", "Z-Score", "Interests", "Results"];
