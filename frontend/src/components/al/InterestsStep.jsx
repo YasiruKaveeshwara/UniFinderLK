@@ -1,5 +1,5 @@
 import React from "react";
-import { SparkleIcon, InfoIcon } from "../ui/DegreeIcons";
+import { SparkleIcon, InfoIcon } from "../ui/Icons";
 
 export default function InterestsStep({ interests, onChange }) {
 	const charCount = interests.length;

@@ -1,5 +1,5 @@
 import React from "react";
-import { InfoIcon, ZScoreIcon } from "../ui/DegreeIcons";
+import { InfoIcon, ZScoreIcon } from "../ui/Icons";
 
 /**
  * ZScoreStep — Step 1 (optional)

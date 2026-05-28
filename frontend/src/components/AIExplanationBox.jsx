@@ -1,5 +1,5 @@
 import React from "react";
-import { SparkleIcon } from "./ui/DegreeIcons";
+import { SparkleIcon } from "./ui/Icons";
 
 const KEYWORDS = [
 	"AI",

@@ -13,47 +13,24 @@ import {
 	LightbulbIcon,
 	ShieldCheckIcon,
 	UserGroupIcon,
-	UniversityIcon,
 	ScrollDownIcon,
-} from "../components/ui/DegreeIcons";
-
-function FloatingParticles() {
-	const particles = [
-		{ size: 6, x: "12%", y: "22%", dur: 7, del: 0 },
-		{ size: 4, x: "28%", y: "65%", dur: 9, del: 1 },
-		{ size: 5, x: "72%", y: "28%", dur: 6.5, del: 0.5 },
-		{ size: 3, x: "88%", y: "72%", dur: 8, del: 2 },
-		{ size: 7, x: "52%", y: "12%", dur: 5.5, del: 1.5 },
-		{ size: 4, x: "42%", y: "82%", dur: 10, del: 0.8 },
-	];
-
-	return (
-		<div className='absolute inset-0 overflow-hidden pointer-events-none'>
-			{particles.map((particle, index) => (
-				<motion.div
-					key={index}
-					className='absolute rounded-full bg-blue-400/18'
-					style={{ width: particle.size, height: particle.size, left: particle.x, top: particle.y }}
-					animate={{ y: [0, -18, 0], opacity: [0.2, 0.6, 0.2] }}
-					transition={{ duration: particle.dur, delay: particle.del, repeat: Infinity, ease: "easeInOut" }}
-				/>
-			))}
-		</div>
-	);
-}
+} from "../components/ui/Icons";
 
 function StepCard({ step, index, total }) {
 	return (
 		<div className='relative flex flex-col items-center text-center group'>
 			{index < total - 1 && (
-				<div className='absolute hidden h-0.5 bg-gradient-to-r from-blue-300 to-transparent top-8 left-[60%] w-full md:block' />
+				<div
+					className='absolute hidden h-1 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 md:block'
+					style={{ left: "50%", width: "calc(100% + 2.5rem)", top: "2rem", transform: "translateY(-50%)" }}
+				/>
 			)}
 
-			<div className='relative z-10 flex items-center justify-center w-16 h-16 mb-5 text-white transition-transform duration-300 shadow-lg bg-gradient-to-br from-blue-600 to-blue-500 rounded-2xl group-hover:scale-110 shadow-blue-500/25'>
-				<span className='text-xl font-extrabold'>{index + 1}</span>
+			<div className='relative z-10 flex items-center justify-center w-16 h-16 mb-4 text-white transition-transform duration-300 rounded-full shadow-xl bg-gradient-to-br from-blue-500 to-indigo-600 group-hover:scale-110 ring-2 ring-white/30'>
+				<span className='text-2xl font-extrabold'>{index + 1}</span>
 			</div>
 
-			<h3 className='mb-2 text-lg font-bold text-slate-900'>{step.title}</h3>
+			<h3 className='mb-2 text-lg font-semibold text-slate-900'>{step.title}</h3>
 			<p className='max-w-xs text-sm leading-relaxed text-slate-500'>{step.description}</p>
 		</div>
 	);
@@ -147,11 +124,11 @@ export default function HomePage() {
 		{
 			title: "Select Your Pathway",
 			description:
-				"Choose whether you're an O/L student exploring career paths or an A/L student finding eligible degrees.",
+				"Choose whether you're an O/L student exploring higher education or an A/L student finding eligible degrees.",
 		},
 		{
 			title: "Enter Your Details",
-			description: "Share your academic info — stream, subjects, Z-score, or interests. Skip any optional fields.",
+			description: "Share your academic info: stream, subjects, Z-score, or interests. Skip any optional fields.",
 		},
 		{
 			title: "AI Analyzes Profile",
@@ -203,7 +180,7 @@ export default function HomePage() {
 
 	const stats = [
 		{ value: "15+", label: "Universities" },
-		{ value: "500+", label: "Degree Programs" },
+		{ value: "200+", label: "Degree Programs" },
 		{ value: "25", label: "Districts Covered" },
 		{ value: "5", label: "A/L Streams" },
 	];
@@ -212,12 +189,10 @@ export default function HomePage() {
 		<div className='relative overflow-hidden'>
 			<section
 				id='hero-section'
-				className='relative overflow-hidden bg-gradient-to-br from-blue-100 via-blue-50 to-blue-200/80'>
+				className='relative overflow-hidden bg-gradient-to-br from-white via-blue-50 to-blue-100/80'>
 				<div className='absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-blue-300/18 rounded-full blur-[140px] pointer-events-none' />
 				<div className='absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-blue-400/14 rounded-full blur-[120px] pointer-events-none' />
 				<div className='absolute top-[40%] right-[30%] w-[250px] h-[250px] bg-blue-300/12 rounded-full blur-[100px] pointer-events-none' />
-
-				<FloatingParticles />
 
 				<div className='relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-24 sm:px-6'>
 					<div className='w-full max-w-5xl mx-auto text-center'>
@@ -255,19 +230,12 @@ export default function HomePage() {
 									Get Started Free
 									<ArrowRightIcon className='w-4 h-4' />
 								</button>
-								<button
-									type='button'
-									onClick={() => navigate("/degree-recommendations/al-students")}
-									className='inline-flex items-center justify-center gap-2.5 px-8 py-4 text-base font-semibold text-blue-700 bg-white rounded-2xl border border-blue-200 shadow-sm transition-all duration-300 hover:bg-blue-50 hover:-translate-y-0.5 hover:shadow-md'>
-									A/L Degree Match
-									<ArrowRightIcon className='w-4 h-4' />
-								</button>
 							</div>
 						</Reveal>
 
 						<Reveal delay={0.65}>
 							<div className='flex flex-wrap items-center justify-center gap-6 mt-12'>
-								{["Based on real UGC data", "No sign-up required", "100% free"].map((text) => (
+								{["Based on real UGC data", "100% free"].map((text) => (
 									<div key={text} className='flex items-center gap-2 text-sm font-medium text-slate-500'>
 										<CheckCircleIcon className='w-5 h-5 text-blue-500' />
 										<span>{text}</span>
@@ -287,9 +255,7 @@ export default function HomePage() {
 				</div>
 			</section>
 
-			<section
-				id='pathways-section'
-				className='relative px-4 py-24 sm:px-6 bg-gradient-to-b from-green-100/85 via-green-50/70 to-green-200/70'>
+			<section id='pathways-section' className='relative px-4 py-24 bg-white sm:px-6'>
 				<div className='absolute top-[10%] left-[5%] w-[400px] h-[400px] bg-green-200/25 rounded-full blur-[140px] pointer-events-none' />
 				<div className='absolute bottom-[10%] right-[5%] w-[400px] h-[400px] bg-green-300/20 rounded-full blur-[140px] pointer-events-none' />
 
@@ -321,11 +287,11 @@ export default function HomePage() {
 								badgeBg='bg-green-50'
 								badgeText='text-green-700'
 								badgeBorder='border-green-100'
-								title='Explore Career Paths'
+								title='Choose Your A/L Stream'
 								titleHoverColor='group-hover:text-green-900'
-								description="Planning your A/L stream? Tell us about your interests and strengths. We'll suggest degrees and career paths that align with your passion."
-								features={["Interest-based recommendations", "AI-powered career insights", "Stream recommendations"]}
-								ctaText='Start Exploring'
+								description="Not sure which A/L stream to choose? Tell us your interests and strengths and we'll suggest suitable A/L stream options and potential degree programs that match your profile."
+								features={["Interest-based stream suggestions", "Potential degree mapping", "AI-driven guidance"]}
+								ctaText='Find Stream Options'
 								ctaColor='text-green-600'
 								checkBg='bg-green-100'
 								checkText='text-green-600'
@@ -358,24 +324,51 @@ export default function HomePage() {
 				</div>
 			</section>
 
-			<section
-				id='how-it-works'
-				className='relative px-4 py-24 overflow-hidden sm:px-6 bg-gradient-to-br from-blue-100/80 via-blue-50/60 to-blue-200/70'>
+			<section id='stats-section' className='relative px-4 py-20 overflow-hidden bg-white sm:px-6'>
+				<div className='absolute top-0 right-0 w-[400px] h-[400px] bg-blue-300/15 rounded-full blur-[120px] pointer-events-none' />
+				<div className='absolute bottom-0 left-10 w-[300px] h-[300px] bg-blue-400/12 rounded-full blur-[100px] pointer-events-none' />
+				<div
+					className='absolute inset-0 opacity-[0.06]'
+					style={{
+						backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)`,
+						backgroundSize: "24px 24px",
+					}}
+				/>
+
+				<div className='relative z-10 max-w-5xl mx-auto'>
+					<Reveal>
+						<div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
+							{stats.map((stat, index) => (
+								<motion.div
+									key={stat.label}
+									className='px-5 py-8 text-center border border-blue-100 shadow-sm rounded-3xl bg-sky-100/50 backdrop-blur'
+									initial={{ scale: 0.8, opacity: 0 }}
+									whileInView={{ scale: 1, opacity: 1 }}
+									viewport={{ once: true }}
+									transition={{ delay: 0.1 + index * 0.1, duration: 0.5 }}>
+									<div className='mb-2 text-4xl font-extrabold text-slate-900 sm:text-5xl'>{stat.value}</div>
+									<div className='text-sm font-semibold tracking-wider uppercase text-slate-500'>{stat.label}</div>
+								</motion.div>
+							))}
+						</div>
+					</Reveal>
+				</div>
+			</section>
+
+			<section id='how-it-works' className='relative px-4 py-24 overflow-hidden bg-white sm:px-6'>
 				<div className='absolute top-[-8%] right-[-5%] w-[500px] h-[500px] bg-blue-200/25 rounded-full blur-[140px] pointer-events-none' />
 				<div className='absolute bottom-[-8%] left-[-5%] w-[400px] h-[400px] bg-blue-300/20 rounded-full blur-[120px] pointer-events-none' />
 
 				<div className='relative z-10 max-w-6xl mx-auto'>
 					<Reveal>
 						<div className='mb-16 text-center'>
-							<div className='inline-flex items-center gap-2 px-4 py-1.5 mb-5 text-sm font-semibold border rounded-full shadow-sm bg-white border-blue-100 text-blue-600'>
-								<SparkleIcon className='w-4 h-4' />
-								<span>Simple Process</span>
-							</div>
 							<h2 className='mb-4 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl text-slate-900'>
 								How It Works
 							</h2>
-							<p className='max-w-2xl mx-auto text-lg text-slate-500'>
-								Get from zero to personalized degree recommendations in four easy steps.
+							<p className='max-w-3xl mx-auto mb-4 text-lg text-slate-600'>
+								Our process turns a few simple inputs into clear, ranked degree recommendations. We combine verified UGC
+								cutoff data, your academic details, and AI-powered semantic matching to produce explainable results
+								tailored to your profile.
 							</p>
 						</div>
 					</Reveal>
@@ -390,16 +383,14 @@ export default function HomePage() {
 				</div>
 			</section>
 
-			<section
-				id='features-section'
-				className='relative px-4 py-24 bg-gradient-to-b from-green-100/80 via-green-50/60 to-green-200/65 sm:px-6'>
+			<section id='features-section' className='relative px-4 py-24 bg-white'>
 				<div className='max-w-6xl mx-auto'>
 					<Reveal>
 						<div className='mb-16 text-center'>
 							<h2 className='mb-4 text-3xl font-extrabold tracking-tight sm:text-4xl text-slate-900'>
-								Why Students{" "}
+								Why{" "}
 								<span className='text-transparent bg-clip-text bg-gradient-to-r from-green-700 to-green-500'>
-									Trust Uni-Finder
+									UniFinderLK
 								</span>
 							</h2>
 							<p className='max-w-2xl mx-auto text-lg text-slate-500'>
@@ -422,100 +413,6 @@ export default function HomePage() {
 							</Reveal>
 						))}
 					</div>
-				</div>
-			</section>
-
-			<section
-				id='stats-section'
-				className='relative px-4 py-20 overflow-hidden sm:px-6 bg-gradient-to-r from-blue-100/85 via-blue-50/70 to-blue-200/75'>
-				<div className='absolute top-0 right-0 w-[400px] h-[400px] bg-blue-300/15 rounded-full blur-[120px] pointer-events-none' />
-				<div className='absolute bottom-0 left-10 w-[300px] h-[300px] bg-blue-400/12 rounded-full blur-[100px] pointer-events-none' />
-				<div
-					className='absolute inset-0 opacity-[0.06]'
-					style={{
-						backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)`,
-						backgroundSize: "24px 24px",
-					}}
-				/>
-
-				<div className='relative z-10 max-w-5xl mx-auto'>
-					<Reveal>
-						<div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
-							{stats.map((stat, index) => (
-								<motion.div
-									key={stat.label}
-									className='px-5 py-8 text-center border border-blue-100 shadow-sm rounded-3xl bg-white/80 backdrop-blur'
-									initial={{ scale: 0.8, opacity: 0 }}
-									whileInView={{ scale: 1, opacity: 1 }}
-									viewport={{ once: true }}
-									transition={{ delay: 0.1 + index * 0.1, duration: 0.5 }}>
-									<div className='mb-2 text-4xl font-extrabold text-slate-900 sm:text-5xl'>{stat.value}</div>
-									<div className='text-sm font-semibold tracking-wider uppercase text-slate-500'>{stat.label}</div>
-								</motion.div>
-							))}
-						</div>
-					</Reveal>
-				</div>
-			</section>
-
-			<section
-				id='cta-section'
-				className='relative px-4 py-24 overflow-hidden sm:px-6 bg-gradient-to-br from-green-100/85 via-green-50/65 to-green-200/75'>
-				<div className='absolute top-[20%] left-[30%] w-[500px] h-[500px] bg-green-200/20 rounded-full blur-[160px] pointer-events-none' />
-				<div className='absolute bottom-[10%] right-[20%] w-[400px] h-[400px] bg-green-300/15 rounded-full blur-[140px] pointer-events-none' />
-
-				<div className='relative z-10 max-w-3xl mx-auto text-center'>
-					<Reveal>
-						<div className='inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-sm font-semibold border rounded-full shadow-sm bg-white border-green-100 text-green-600'>
-							<UniversityIcon className='w-5 h-5 text-green-500' />
-							<span>Start Your Journey</span>
-						</div>
-					</Reveal>
-
-					<Reveal delay={0.15}>
-						<h2 className='mb-6 text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl text-slate-900'>
-							Ready to Discover Your{" "}
-							<span className='text-transparent bg-clip-text bg-gradient-to-r from-green-700 to-green-500'>
-								Dream Degree?
-							</span>
-						</h2>
-					</Reveal>
-
-					<Reveal delay={0.25}>
-						<p className='max-w-xl mx-auto mb-10 text-lg text-slate-500'>
-							Join thousands of Sri Lankan students who've already found their perfect university pathway. It's free,
-							fast, and powered by real UGC data.
-						</p>
-					</Reveal>
-
-					<Reveal delay={0.35}>
-						<div className='flex flex-col items-center justify-center gap-4 sm:flex-row'>
-							<button
-								type='button'
-								onClick={scrollToPathways}
-								className='inline-flex items-center justify-center gap-2.5 px-8 py-4 text-base font-bold text-white bg-gradient-to-r from-green-600 to-green-500 rounded-2xl shadow-lg shadow-green-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl active:scale-[0.98]'>
-								Open Degree System
-								<ArrowRightIcon className='w-4 h-4' />
-							</button>
-							<button
-								type='button'
-								onClick={() => navigate("/degree-recommendations/all-students")}
-								className='inline-flex items-center justify-center gap-2.5 px-8 py-4 text-base font-semibold text-green-700 bg-white rounded-2xl border border-green-200 shadow-sm transition-all duration-300 hover:bg-green-50 hover:-translate-y-0.5 hover:shadow-md'>
-								Explore Career Paths
-								<ArrowRightIcon className='w-4 h-4' />
-							</button>
-						</div>
-					</Reveal>
-
-					<Reveal delay={0.45}>
-						<div className='inline-flex items-center justify-center gap-3 px-6 py-4 mt-12 bg-white border border-green-200 shadow-sm rounded-2xl'>
-							<SparkleIcon className='w-5 h-5 text-green-500' />
-							<p className='text-sm text-slate-600'>
-								<span className='font-bold text-slate-900'>Powered by AI:</span> Analyzing UGC cutoffs, semantic
-								similarity, and career pathways in real-time.
-							</p>
-						</div>
-					</Reveal>
 				</div>
 			</section>
 		</div>

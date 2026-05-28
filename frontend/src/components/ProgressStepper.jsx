@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { CheckIcon } from "./ui/DegreeIcons";
+import { CheckIcon } from "./ui/Icons";
 
 /**
  * ProgressStepper

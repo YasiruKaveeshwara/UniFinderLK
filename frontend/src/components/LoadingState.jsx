@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BookIcon, FilterIcon, ChartBarIcon, SparkleIcon, StarIcon } from "./ui/DegreeIcons";
+import { BookIcon, FilterIcon, ChartBarIcon, SparkleIcon, StarIcon } from "./ui/Icons";
 
 // ── Processing stages shown sequentially ──────────────────────────────────────
 const DEFAULT_STAGES = [

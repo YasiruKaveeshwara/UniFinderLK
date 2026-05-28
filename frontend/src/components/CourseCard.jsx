@@ -14,7 +14,7 @@ import {
 	FlaskIcon,
 	ChevronDownIcon,
 	SparkleIcon,
-} from "./ui/DegreeIcons";
+} from "./ui/Icons";
 
 // ── AI Match Indicator ────────────────────────────────────────────────────────
 function MatchIndicator({ score }) {

@@ -1,5 +1,5 @@
 import React from "react";
-import { UserIcon, RefreshIcon } from "../ui/DegreeIcons";
+import { UserIcon, RefreshIcon } from "../ui/Icons";
 
 /**
  * ALResultsSummary — shown at top of Step 3 results.

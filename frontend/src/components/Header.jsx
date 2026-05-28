@@ -3,21 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signout } from "../redux/User/userSlice";
 
-const LogoMark = ({ className = "w-8 h-8" }) => (
-	<img src='/favicon.png' alt='Uni-Finder Logo' className={`${className} object-contain`} />
-);
-
-const MenuIcon = () => (
-	<svg className='w-5 h-5' fill='none' stroke='currentColor' strokeWidth='2' viewBox='0 0 24 24'>
-		<path strokeLinecap='round' d='M4 7h16M4 12h16M4 17h16' />
-	</svg>
-);
-
-const CloseIcon = () => (
-	<svg className='w-5 h-5' fill='none' stroke='currentColor' strokeWidth='2' viewBox='0 0 24 24'>
-		<path strokeLinecap='round' d='M6 18L18 6M6 6l12 12' />
-	</svg>
-);
+import { LogoMark, MenuIcon, CloseIcon } from "./ui/Icons";
 
 export default function Header() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -43,28 +29,21 @@ export default function Header() {
 	};
 
 	const navLinks = [
-		{ label: "Home", href: "/" },
-		{ label: "Degrees", href: "/#pathways-section" },
+		{ label: "A/L Streams", href: "/degree-recommendations/al-students" },
+		{ label: "O/L Explorer", href: "/degree-recommendations/all-students" },
 	];
 
-	const isTransparent = false;
 	const isActive = (path) => location.pathname === path;
 
 	return (
 		<header
 			id='site-header'
-			className={`fixed top-0 z-50 w-full transition-all duration-300 ${
-				isTransparent ?
-					"bg-slate-950/35 backdrop-blur-md shadow-sm"
-				:	"bg-sky-100/95 backdrop-blur-xl shadow-sm border-b border-sky-200/80"
-			}`}>
+			className='fixed top-0 z-50 w-full transition-all duration-300 border-b shadow-sm bg-white/80 backdrop-blur-md border-white/10'>
 			<div className='px-4 mx-auto max-w-7xl sm:px-6 lg:px-8'>
 				<div className='flex items-center justify-between h-16'>
 					<Link to='/' className='flex items-center gap-2.5 no-underline group'>
 						<LogoMark className='transition-transform duration-300 w-9 h-9 group-hover:scale-105' />
-						<span className={`text-lg font-bold tracking-tight ${isTransparent ? "text-white" : "text-slate-900"}`}>
-							Uni-Finder
-						</span>
+						<span className='text-lg font-bold tracking-tight text-slate-900'>UniFinderLK</span>
 					</Link>
 
 					<nav className='items-center hidden gap-1 md:flex'>
@@ -73,17 +52,13 @@ export default function Header() {
 								key={link.href}
 								to={link.href}
 								className={`relative px-3 py-2 text-sm font-semibold no-underline transition-colors group ${
-									isActive(link.href) ?
-										isTransparent ? "text-white"
-										:	"text-indigo-600"
-									: isTransparent ? "text-white/75 hover:text-white"
-									: "text-slate-600 hover:text-indigo-600"
+									isActive(link.href) ? "text-indigo-600" : "text-slate-600 hover:text-indigo-600"
 								}`}>
 								{link.label}
 								<span
 									className={`absolute left-3 right-3 bottom-1 h-0.5 rounded-full transition-transform origin-left ${
 										isActive(link.href) ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-									} ${isTransparent ? "bg-white" : "bg-indigo-600"}`}
+									} bg-indigo-600`}
 								/>
 							</Link>
 						))}
@@ -92,38 +67,25 @@ export default function Header() {
 					<div className='items-center hidden gap-3 md:flex'>
 						{isLoggedIn ?
 							<>
-								<div
-									className={`px-3 py-2 text-sm font-semibold rounded-lg ${isTransparent ? "text-white/90 bg-white/10" : "text-slate-700 bg-slate-100"}`}>
+								<div className='px-3 py-2 text-sm font-semibold rounded-lg text-slate-700 bg-slate-100'>
 									{currentUser.username || currentUser.email || "Member"}
 								</div>
 								<button
 									type='button'
 									onClick={handleLogout}
-									className={`px-4 py-2 text-sm font-semibold rounded-lg transition-colors ${
-										isTransparent ?
-											"text-white border border-white/25 hover:bg-white/10"
-										:	"text-indigo-600 border border-indigo-200 bg-indigo-50 hover:bg-indigo-100"
-									}`}>
+									className='px-4 py-2 text-sm font-semibold text-indigo-600 transition-colors border border-indigo-200 rounded-lg bg-indigo-50 hover:bg-indigo-100'>
 									Logout
 								</button>
 							</>
 						:	<>
 								<Link
 									to='/signin'
-									className={`px-4 py-2 text-sm font-semibold no-underline rounded-lg transition-colors ${
-										isTransparent ?
-											"text-white border border-white/25 hover:bg-white/10"
-										:	"text-slate-700 hover:text-indigo-600 hover:bg-slate-50"
-									}`}>
+									className='px-4 py-2 text-sm font-semibold no-underline transition-colors rounded-lg text-slate-700 hover:text-indigo-600 hover:bg-slate-50'>
 									Sign In
 								</Link>
 								<Link
 									to='/signup'
-									className={`px-5 py-2 text-sm font-semibold no-underline rounded-lg transition-colors ${
-										isTransparent ?
-											"bg-white text-indigo-600 hover:bg-white/90"
-										:	"bg-indigo-600 text-white hover:bg-indigo-700"
-									}`}>
+									className='px-5 py-2 text-sm font-semibold text-white no-underline transition-colors bg-indigo-600 rounded-lg hover:bg-indigo-700'>
 									Get Started
 								</Link>
 							</>
@@ -135,19 +97,19 @@ export default function Header() {
 							<button
 								type='button'
 								onClick={handleLogout}
-								className={`px-3 py-1.5 text-xs font-semibold rounded-lg ${isTransparent ? "text-white border border-white/25" : "text-indigo-600 border border-indigo-200 bg-indigo-50"}`}>
+								className='px-3 py-1.5 text-xs font-semibold rounded-lg text-indigo-600 border border-indigo-200 bg-indigo-50'>
 								Logout
 							</button>
 						:	<Link
 								to='/signin'
-								className={`px-3 py-1.5 text-xs font-semibold rounded-lg ${isTransparent ? "text-white border border-white/25" : "text-indigo-600 border border-indigo-200"}`}>
+								className='px-3 py-1.5 text-xs font-semibold rounded-lg text-indigo-600 border border-indigo-200'>
 								Sign In
 							</Link>
 						}
 						<button
 							type='button'
 							onClick={() => setMobileMenuOpen((open) => !open)}
-							className={`p-2 rounded-lg ${isTransparent ? "text-white hover:bg-white/10" : "text-slate-700 hover:bg-slate-100"}`}
+							className='p-2 rounded-lg text-slate-700 hover:bg-slate-100'
 							aria-label='Toggle menu'>
 							{mobileMenuOpen ?
 								<CloseIcon />
@@ -158,17 +120,13 @@ export default function Header() {
 			</div>
 
 			{mobileMenuOpen && (
-				<div className='border-t md:hidden border-sky-100/70 bg-sky-50/95 backdrop-blur-xl'>
+				<div className='border-t md:hidden border-white/10 bg-white/20 backdrop-blur-md'>
 					<div className='px-4 py-3 space-y-1'>
 						{navLinks.map((link) => (
 							<Link
 								key={link.href}
 								to={link.href}
-								className={`block px-3 py-2.5 rounded-lg text-sm font-semibold no-underline ${
-									isActive(link.href) ? "bg-indigo-50 text-indigo-700" : (
-										"text-slate-600 hover:bg-slate-50 hover:text-indigo-600"
-									)
-								}`}>
+								className={`block px-3 py-2.5 rounded-lg text-sm font-semibold no-underline ${isActive(link.href) ? "bg-indigo-50 text-indigo-700" : "text-slate-600 hover:bg-slate-50 hover:text-indigo-600"}`}>
 								{link.label}
 							</Link>
 						))}

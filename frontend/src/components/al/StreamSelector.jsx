@@ -2,7 +2,7 @@ import React from "react";
 import { AL_STREAMS } from "../../constants/degreeConstants";
 import { StreamIcon } from "./StreamIcons";
 import { SRI_LANKA_DISTRICTS } from "../../constants/degreeConstants";
-import { CheckIcon, InfoIcon, AlertIcon, MapPinIcon } from "../ui/DegreeIcons";
+import { CheckIcon, InfoIcon, AlertIcon, MapPinIcon } from "../ui/Icons";
 
 // ── StreamSelector ────────────────────────────────────────────────────────────
 export default function StreamSelector({ formData, setFormData, subjectRuleError }) {

@@ -39,7 +39,7 @@ export default function Footer() {
 					<div className='space-y-5'>
 						<div className='flex items-center gap-2.5'>
 							<LogoMark />
-							<span className='text-lg font-bold tracking-tight text-slate-900'>Uni-Finder</span>
+							<span className='text-lg font-bold tracking-tight text-slate-900'>UniFinderLK</span>
 						</div>
 						<p className='max-w-xs text-sm leading-relaxed text-slate-500'>
 							AI-driven degree recommendation for Sri Lankan students. The app now focuses on one system: helping you
@@ -79,7 +79,7 @@ export default function Footer() {
 				</div>
 
 				<div className='flex flex-col items-center justify-between gap-4 py-6 text-xs border-t sm:flex-row border-slate-200 text-slate-400'>
-					<p>&copy; {year} Uni-Finder. All rights reserved.</p>
+					<p>&copy; {year} UniFinderLK. All rights reserved.</p>
 					<div className='flex gap-5'>
 						<span>Degree-first</span>
 						<span className='w-0.5 h-3 bg-slate-200 rounded' />
