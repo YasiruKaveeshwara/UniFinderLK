@@ -23,6 +23,7 @@ export default function SignUp() {
 			const res = await fetch(`${API_BASE}/api/auth/signup`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
+				credentials: "include",
 				body: JSON.stringify(formdata),
 			});
 			const data = await res.json().catch(() => ({}));
@@ -64,6 +65,21 @@ export default function SignUp() {
 
 						{/* Form */}
 						<form onSubmit={handleSubmit} className='space-y-5'>
+							{/* Name field */}
+							<div>
+								<label htmlFor='name' className='block mb-1.5 text-sm font-semibold text-slate-700'>
+									Full Name
+								</label>
+								<input
+									type='text'
+									id='name'
+									placeholder='Enter your full name'
+									onChange={handleChange}
+									required
+									className='w-full px-4 py-3 text-sm transition-colors border rounded-xl bg-slate-50 border-slate-200 placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 focus:bg-white focus:outline-none'
+								/>
+							</div>
+
 							{/* Email field */}
 							<div>
 								<label htmlFor='email' className='block mb-1.5 text-sm font-semibold text-slate-700'>
@@ -71,7 +87,6 @@ export default function SignUp() {
 								</label>
 								<input
 									type='email'
-									s
 									id='email'
 									placeholder='you@example.com'
 									onChange={handleChange}

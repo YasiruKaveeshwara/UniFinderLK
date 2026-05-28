@@ -8,6 +8,8 @@ import SignIn from "./pages/Signin";
 import ALWizardFlow from "./pages/ALWizardFlow";
 import OLExplorerFlow from "./pages/OLExplorerFlow";
 import OLResultsPage from "./pages/OLResultsPage";
+import ProfilePage from "./pages/ProfilePage";
+import PrivateRoute from "./components/PrivateRoute";
 
 function AppContent() {
 	const location = useLocation();
@@ -33,6 +35,14 @@ function AppContent() {
 					<Route path='/degree-recommendations/al-students' element={<ALWizardFlow />} />
 					<Route path='/degree-recommendations/all-students' element={<OLExplorerFlow />} />
 					<Route path='/degree-recommendations/ol-results' element={<OLResultsPage />} />
+					<Route
+						path='/profile'
+						element={
+							<PrivateRoute>
+								<ProfilePage />
+							</PrivateRoute>
+						}
+					/>
 					<Route path='/signin' element={<SignIn />} />
 					<Route path='/signup' element={<SignUp />} />
 					<Route path='/signInNew' element={<Navigate to='/signin' replace />} />

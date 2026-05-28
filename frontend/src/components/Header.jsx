@@ -67,9 +67,11 @@ export default function Header() {
 					<div className='items-center hidden gap-3 md:flex'>
 						{isLoggedIn ?
 							<>
-								<div className='px-3 py-2 text-sm font-semibold rounded-lg text-slate-700 bg-slate-100'>
-									{currentUser.username || currentUser.email || "Member"}
-								</div>
+								<Link
+									to='/profile'
+									className='px-3 py-2 text-sm font-semibold no-underline transition-colors rounded-lg text-slate-700 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600'>
+									{currentUser.name || currentUser.email || "My Profile"}
+								</Link>
 								<button
 									type='button'
 									onClick={handleLogout}
@@ -130,6 +132,13 @@ export default function Header() {
 								{link.label}
 							</Link>
 						))}
+						{isLoggedIn && (
+							<Link
+								to='/profile'
+								className={`block px-3 py-2.5 rounded-lg text-sm font-semibold no-underline ${isActive("/profile") ? "bg-indigo-50 text-indigo-700" : "text-slate-600 hover:bg-slate-50 hover:text-indigo-600"}`}>
+								My Profile
+							</Link>
+						)}
 						{!isLoggedIn && (
 							<Link
 								to='/signup'
