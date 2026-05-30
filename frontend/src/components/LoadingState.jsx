@@ -11,11 +11,11 @@ const DEFAULT_STAGES = [
 ];
 
 export const OL_STAGES = [
-	{ label: "Analyzing your O/L marks", Icon: BookIcon },
-	{ label: "Mapping to A/L streams", Icon: FilterIcon },
+	{ label: "Analyzing your O/L results", Icon: BookIcon },
+	{ label: "Identifying matching A/L streams", Icon: FilterIcon },
 	{ label: "Running AI interest analysis", Icon: SparkleIcon },
-	{ label: "Finding potential degrees", Icon: StarIcon },
-	{ label: "Generating best pathways", Icon: ChartBarIcon },
+	{ label: "Finding aligned university degrees", Icon: StarIcon },
+	{ label: "Building your recommendations", Icon: ChartBarIcon },
 ];
 
 // ── Main component ────────────────────────────────────────────────────────────

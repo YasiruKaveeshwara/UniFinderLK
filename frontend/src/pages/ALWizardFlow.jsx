@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import ProgressStepper from "../components/ProgressStepper";
 import LoadingState from "../components/LoadingState";
 import CourseCard from "../components/CourseCard";
@@ -9,6 +10,7 @@ import InterestsStep from "../components/al/InterestsStep";
 import ALResultsSummary from "../components/al/ALResultsSummary";
 import { AL_STREAMS, getSubjectRuleError } from "../constants/degreeConstants";
 import { fetchDegreeRecommendations } from "../api/DegreeAPI";
+import { fetchAcademicProfile } from "../api/academicApi";
 import { ArrowRightIcon, ArrowLeftIcon, SpinnerIcon, GraduationIcon, RefreshIcon } from "../components/ui/Icons";
 
 const STEPS = ["Stream & District", "Z-Score", "Interests", "Results"];
@@ -30,6 +32,8 @@ function detectScenario(data) {
 // ── Component ─────────────────────────────────────────────────────────────────
 export default function ALWizardFlow() {
 	const navigate = useNavigate();
+	const currentUser = useSelector((state) => state.user?.currentUser);
+	const isLoggedIn = Boolean(currentUser);
 
 	const [currentStep, setCurrentStep] = useState(0);
 	const [formData, setFormData] = useState({ stream: "", subjects: [], zscore: "", interests: "", district: "" });
@@ -37,6 +41,7 @@ export default function ALWizardFlow() {
 	const [results, setResults] = useState(null);
 	const [error, setError] = useState("");
 	const [filter, setFilter] = useState("all");
+	const [autofilled, setAutofilled] = useState(false);
 
 	// Stepper display: while loading show step 3 as active; on results mark all done (step 4)
 	const progressDisplayStep =
@@ -47,6 +52,36 @@ export default function ALWizardFlow() {
 	useEffect(() => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
 	}, [currentStep]);
+
+	// ── Autofill from saved profile ──────────────────────────────────────────
+	useEffect(() => {
+		if (!isLoggedIn) return;
+
+		const loadSavedAL = async () => {
+			try {
+				const res = await fetchAcademicProfile();
+				const al = res.data?.alSubjects;
+				if (!al) return;
+
+				const hasData = al.stream || (al.subjects && al.subjects.length > 0) || al.district || al.zscore !== null;
+				if (!hasData) return;
+
+				setFormData((prev) => ({
+					...prev,
+					stream: al.stream || prev.stream,
+					subjects: al.subjects?.length > 0 ? al.subjects : prev.subjects,
+					district: al.district || prev.district,
+					zscore: al.zscore !== null && al.zscore !== undefined ? String(al.zscore) : prev.zscore,
+					interests: al.interests || prev.interests,
+				}));
+				setAutofilled(true);
+			} catch (_) {
+				// Silently fail — autofill is a convenience
+			}
+		};
+
+		loadSavedAL();
+	}, [isLoggedIn]);
 
 	// Subject rule validation (memoised)
 	const subjectRuleError = useMemo(
@@ -305,6 +340,14 @@ export default function ALWizardFlow() {
 					<p className='max-w-xl mb-8 text-lg leading-relaxed text-blue-100/80'>
 						Fill in your details step by step. Optional fields can be skipped, We'll find the best matches
 						automatically.
+						{autofilled && (
+							<span className='inline-flex items-center gap-1 px-2 py-0.5 ml-2 text-xs font-semibold rounded-full bg-blue-400/30 text-blue-100 border border-blue-300/40'>
+								<svg className='w-3 h-3' fill='none' stroke='currentColor' strokeWidth='2.5' viewBox='0 0 24 24'>
+									<path strokeLinecap='round' strokeLinejoin='round' d='M4.5 12.75l6 6 9-13.5' />
+								</svg>
+								Autofilled from profile
+							</span>
+						)}
 					</p>
 					<ProgressStepper steps={STEPS} currentStep={progressDisplayStep} theme='blue' />
 				</div>

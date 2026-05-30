@@ -13,6 +13,8 @@ import {
 import { updateUserProfile, deleteUserAccount } from "../api/userApi";
 import { SpinnerIcon, AlertCircleIcon, CheckCircleIcon, UserIcon } from "../components/ui/Icons";
 import Reveal from "../components/ui/Reveal";
+import OLSubjectsCard from "../components/profile/OLSubjectsCard";
+import ALSubjectsCard from "../components/profile/ALSubjectsCard";
 
 export default function ProfilePage() {
 	const dispatch = useDispatch();
@@ -267,8 +269,18 @@ export default function ProfilePage() {
 					</div>
 				</Reveal>
 
-				{/* Account info card */}
+				{/* O/L Subjects Section */}
+				<Reveal delay={0.2}>
+					<OLSubjectsCard />
+				</Reveal>
+
+				{/* A/L Details Section */}
 				<Reveal delay={0.25}>
+					<ALSubjectsCard />
+				</Reveal>
+
+				{/* Account info card */}
+				<Reveal delay={0.35}>
 					<div className='p-6 mt-6 border bg-white/80 backdrop-blur-sm border-slate-200/60 rounded-2xl'>
 						<div className='flex items-center gap-3 mb-4'>
 							<UserIcon className='w-5 h-5 text-indigo-500' />

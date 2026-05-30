@@ -132,7 +132,8 @@ export default function HomePage() {
 		},
 		{
 			title: "AI Analyzes Profile",
-			description: "Our AI cross-references UGC cutoffs, semantic matching, and career pathway data.",
+			description:
+				"Our AI cross-references UGC cutoffs, degree eligibility, and your interests to find the best matches.",
 		},
 		{
 			title: "Get Personalized Results",

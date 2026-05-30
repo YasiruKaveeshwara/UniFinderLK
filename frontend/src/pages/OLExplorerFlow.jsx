@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { fetchAllDegreeCourses, fetchOLCareerTree } from "../api/DegreeAPI";
+import { fetchAcademicProfile } from "../api/academicApi";
 import olSubjectsConfig from "../config/ol_subjects_config.json";
 import LoadingState, { OL_STAGES } from "../components/LoadingState";
 
@@ -52,6 +54,9 @@ const CAREER_INTEREST_PROMPTS = [
 
 export default function OLExplorerFlow() {
 	const navigate = useNavigate();
+	const currentUser = useSelector((state) => state.user?.currentUser);
+	const isLoggedIn = Boolean(currentUser);
+
 	const [interests, setInterests] = useState("");
 	const [olMarks, setOlMarks] = useState({
 		core: {
@@ -71,6 +76,47 @@ export default function OLExplorerFlow() {
 	});
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
+	const [autofilled, setAutofilled] = useState(false);
+
+	// ── Autofill from saved profile ──────────────────────────────────────────
+	useEffect(() => {
+		if (!isLoggedIn) return;
+
+		const loadSavedSubjects = async () => {
+			try {
+				const res = await fetchAcademicProfile();
+				const ol = res.data?.olSubjects;
+				if (!ol) return;
+
+				// Check if there's any saved data to autofill
+				const hasCore = Object.values(ol.core || {}).some((v) => v && v !== "");
+				const hasBuckets = ol.bucket_1 || ol.bucket_2 || ol.bucket_3;
+				if (!hasCore && !hasBuckets) return;
+
+				setOlMarks({
+					core: {
+						religion: ol.core?.religion || "",
+						first_language: ol.core?.first_language || "",
+						mathematics: ol.core?.mathematics || "",
+						science: ol.core?.science || "",
+						english: ol.core?.english || "",
+						history: ol.core?.history || "",
+						bucket_1_grade: ol.core?.bucket_1_grade || "",
+						bucket_2_grade: ol.core?.bucket_2_grade || "",
+						bucket_3_grade: ol.core?.bucket_3_grade || "",
+					},
+					bucket_1: ol.bucket_1 || "",
+					bucket_2: ol.bucket_2 || "",
+					bucket_3: ol.bucket_3 || "",
+				});
+				setAutofilled(true);
+			} catch (_) {
+				// Silently fail — autofill is a convenience, not critical
+			}
+		};
+
+		loadSavedSubjects();
+	}, [isLoggedIn]);
 
 	const isFormValid = interests.trim().length >= 10;
 
@@ -97,7 +143,7 @@ export default function OLExplorerFlow() {
 				state: { results: treeData, interests, olMarks },
 			});
 		} catch (err) {
-			let errorMessage = "Failed to fetch career recommendations.";
+			let errorMessage = "Failed to generate recommendations. Please try again.";
 
 			if (err?.response?.data?.detail) {
 				const detail = err.response.data.detail;
@@ -138,27 +184,27 @@ export default function OLExplorerFlow() {
 				<div className='relative z-10 max-w-6xl px-6 mx-auto'>
 					<div className='inline-flex items-center gap-2 px-4 py-1.5 mb-4 text-xs font-bold tracking-widest uppercase rounded-full bg-white/10 text-emerald-50 border border-emerald-400/40'>
 						<GraduationIcon />
-						<span>O/L Education Explorer</span>
+						<span>O/L Stream & Degree Explorer</span>
 					</div>
 					<div className='grid items-center grid-cols-1 gap-12 md:grid-cols-2'>
 						<div>
 							<div className='flex items-center gap-4'>
 								<h1 className='text-4xl font-extrabold tracking-tight text-white sm:text-5xl'>
-									Explore Your <br />
+									Discover Your <br />
 									<span className='text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-cyan-300'>
-										University Pathways
+										Ideal A/L Stream
 									</span>
 								</h1>
 							</div>
 							<p className='max-w-lg mt-2 text-lg leading-relaxed text-emerald-50/90'>
-								For O/L students planning their A/L stream and beyond. Tell us what you're passionate about, and our AI
-								will chart your course.
+								Tell us your interests, and we'll suggest the best A/L streams, matching university degrees, and
+								potential career directions to help you decide.
 							</p>
 						</div>
 						<div className='relative hidden md:block'>
 							<img
 								src='/images/feature-career1.png'
-								alt='Career Pathway'
+								alt='A/L Stream Explorer'
 								className='relative z-10 object-cover w-full h-56 border shadow-2xl rounded-3xl aspect-video border-white/10'
 							/>
 						</div>
@@ -170,21 +216,22 @@ export default function OLExplorerFlow() {
 			<div className='relative z-20 max-w-6xl px-6 mx-auto -mt-20'>
 				<div className='p-8 bg-white border shadow-2xl sm:p-12 border-slate-200/60 rounded-3xl'>
 					{loading ?
-						<LoadingState theme='emerald' stages={OL_STAGES} title='Generating Career Map' />
+						<LoadingState theme='emerald' stages={OL_STAGES} title='Finding Your A/L Streams' />
 					:	<>
 							<div className='mb-10'>
 								<h2 className='flex items-center gap-3 mb-3 text-3xl font-extrabold text-slate-900'>
 									What are you passionate about?
 								</h2>
 								<p className='text-lg text-slate-500'>
-									Share your interests, dreams, and hobbies. We'll suggest degrees and paths that match your profile.
+									Share your interests, dreams, and hobbies. We'll suggest matching A/L streams, aligned degrees, and
+									potential career directions.
 								</p>
 							</div>
 
 							{/* Main Textarea */}
 							<div className='mb-8'>
 								<label className='block mb-2 text-sm font-semibold text-slate-700'>
-									Your Career Goals & Interests <span className='text-red-500'>*</span>
+									Your Interests & Goals <span className='text-red-500'>*</span>
 								</label>
 								<textarea
 									placeholder={CAREER_INTEREST_PROMPTS[Math.floor(Math.random() * CAREER_INTEREST_PROMPTS.length)]}
@@ -202,7 +249,17 @@ export default function OLExplorerFlow() {
 
 							{/* Optional O/L Marks */}
 							<div className='mb-8'>
-								<p className='mb-2 text-sm font-medium text-slate-500'>Want more accurate predictions? (Optional)</p>
+								<div className='flex items-center gap-2 mb-2'>
+									<p className='text-sm font-medium text-slate-500'>Want more accurate predictions? (Optional)</p>
+									{autofilled && (
+										<span className='inline-flex shrink-0 -mt-4 items-center gap-1 px-2 py-0.5 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200'>
+											<svg className='w-3 h-3' fill='none' stroke='currentColor' strokeWidth='2.5' viewBox='0 0 24 24'>
+												<path strokeLinecap='round' strokeLinejoin='round' d='M4.5 12.75l6 6 9-13.5' />
+											</svg>
+											Autofilled from profile
+										</span>
+									)}
+								</div>
 								<details className='mb-2 overflow-hidden transition-all border group border-slate-200 rounded-2xl bg-slate-50 hover:border-emerald-200'>
 									<summary className='flex items-center gap-3 px-3 py-4 font-semibold cursor-pointer select-none text-slate-700 hover:text-slate-900'>
 										<div className='flex items-center justify-center w-8 rounded-lg bg-emerald-100 text-emerald-600'>
@@ -375,10 +432,10 @@ export default function OLExplorerFlow() {
 								`}>
 									{loading ?
 										<>
-											<SpinnerIcon /> Analyzing Pathway...
+											<SpinnerIcon /> Finding Streams & Degrees...
 										</>
 									:	<>
-											Generate My Career Map <ArrowRightIcon />
+											Find My A/L Streams & Degrees <ArrowRightIcon />
 										</>
 									}
 								</button>

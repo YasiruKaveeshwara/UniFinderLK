@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import CareerPathwayTree from "../components/CareerPathwayTree";
-import { ArrowLeftIcon, ClipboardIcon, GraduationIcon, RefreshIcon, UserIcon } from "../components/ui/Icons";
+import {
+	ArrowLeftIcon,
+	ClipboardIcon,
+	GraduationIcon,
+	RefreshIcon,
+	UserIcon,
+	CheckCircleIcon,
+	SpinnerIcon,
+	AlertCircleIcon,
+} from "../components/ui/Icons";
+import { saveOLSubjects } from "../api/academicApi";
 
 export default function OLResultsPage() {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { results, interests, olMarks } = location.state || {};
+	const currentUser = useSelector((state) => state.user?.currentUser);
+	const isLoggedIn = Boolean(currentUser);
+
+	const [saveStatus, setSaveStatus] = useState("idle"); // idle | saving | saved | error
+	const [saveError, setSaveError] = useState("");
 
 	// If no results (e.g. direct navigation), redirect back
 	if (!results) {
@@ -45,6 +61,30 @@ export default function OLResultsPage() {
 		}))
 		.filter((o) => o.subject);
 
+	// ── Save subjects handler ─────────────────────────────────────────────────
+	const handleSaveSubjects = async () => {
+		if (!isLoggedIn) {
+			navigate("/signin");
+			return;
+		}
+
+		setSaveStatus("saving");
+		setSaveError("");
+
+		try {
+			await saveOLSubjects({
+				core: olMarks.core || {},
+				bucket_1: olMarks.bucket_1 || "",
+				bucket_2: olMarks.bucket_2 || "",
+				bucket_3: olMarks.bucket_3 || "",
+			});
+			setSaveStatus("saved");
+		} catch (err) {
+			setSaveStatus("error");
+			setSaveError(err.message || "Failed to save subjects");
+		}
+	};
+
 	return (
 		<div className='min-h-screen pb-20 bg-slate-50'>
 			{/* Hero Header */}
@@ -56,16 +96,17 @@ export default function OLResultsPage() {
 				<div className='relative z-10 max-w-6xl px-6 mx-auto'>
 					<div className='inline-flex items-center gap-2 px-4 py-1.5 mb-4 text-xs font-bold tracking-widest uppercase rounded-full bg-white/10 text-emerald-50 border border-emerald-400/40'>
 						<GraduationIcon className='w-5 h-5' />
-						<span>O/L Education Explorer</span>
+						<span>O/L Stream & Degree Explorer</span>
 					</div>
 					<h1 className='mb-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl'>
-						Your Career{" "}
+						Your A/L Stream{" "}
 						<span className='text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-300'>
-							Pathway Map
+							& Degree Guide
 						</span>
 					</h1>
 					<p className='max-w-xl text-lg leading-relaxed text-emerald-50/80'>
-						We've discovered A/L streams perfectly matched to your interests and mapped out your ideal degree pathways.
+						Here are the A/L streams that best match your interests, along with recommended degrees and possible career
+						directions.
 					</p>
 				</div>
 			</div>
@@ -142,13 +183,51 @@ export default function OLResultsPage() {
 							</div>
 						)}
 
-						{/* Quick action */}
-						<div className='flex-shrink-0'>
+						{/* Actions column */}
+						<div className='flex flex-col flex-shrink-0 gap-2'>
 							<button
 								onClick={() => navigate("/degree-recommendations/all-students")}
 								className='inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold transition-all border text-emerald-700 border-emerald-200 rounded-xl bg-emerald-50 hover:bg-emerald-100 hover:shadow-md'>
-								<RefreshIcon className='w-4 h-4' /> Try Again
+								<RefreshIcon className='w-4 h-4' /> Try New Interests
 							</button>
+
+							{/* ── Save My Subjects button ───────────────────────────── */}
+							{hasMarks && (
+								<>
+									{saveStatus === "saved" ?
+										<div className='inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold border rounded-xl bg-emerald-50 text-emerald-700 border-emerald-200'>
+											<CheckCircleIcon className='w-4 h-4' /> Saved!
+										</div>
+									:	<button
+											onClick={handleSaveSubjects}
+											disabled={saveStatus === "saving"}
+											className={`
+												inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl transition-all
+												${
+													saveStatus === "saving" ?
+														"bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200"
+													:	"text-white bg-gradient-to-r from-indigo-600 to-blue-600 shadow-md shadow-indigo-500/20 hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98]"
+												}
+											`}>
+											{saveStatus === "saving" ?
+												<>
+													<SpinnerIcon className='w-4 h-4 animate-spin' /> Saving...
+												</>
+											:	<>
+													<ClipboardIcon className='w-4 h-4' />
+													{isLoggedIn ? "Save My Subjects" : "Sign In to Save"}
+												</>
+											}
+										</button>
+									}
+									{saveStatus === "error" && (
+										<div className='flex items-center gap-1.5 text-xs font-medium text-red-600'>
+											<AlertCircleIcon className='w-3.5 h-3.5' />
+											{saveError}
+										</div>
+									)}
+								</>
+							)}
 						</div>
 					</div>
 				</div>
@@ -161,12 +240,12 @@ export default function OLResultsPage() {
 					<button
 						onClick={() => navigate("/degree-recommendations/all-students")}
 						className='inline-flex items-center gap-2 px-8 py-3.5 font-semibold transition-all bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl hover:shadow-lg hover:-translate-y-0.5 shadow-emerald-500/25'>
-						<RefreshIcon className='w-4 h-4' /> Explore Again
+						<RefreshIcon className='w-4 h-4' /> Try Different Interests
 					</button>
 					<button
 						onClick={() => navigate("/")}
 						className='inline-flex items-center gap-2 px-6 py-3.5 font-medium transition-colors bg-white border shadow-sm rounded-xl text-slate-600 border-slate-200 hover:bg-slate-50'>
-						<ArrowLeftIcon className='w-4 h-4' /> Back to Main Menu
+						<ArrowLeftIcon className='w-4 h-4' /> Back to Home
 					</button>
 				</div>
 			</div>
