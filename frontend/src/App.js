@@ -9,6 +9,7 @@ import ALWizardFlow from "./pages/ALWizardFlow";
 import OLExplorerFlow from "./pages/OLExplorerFlow";
 import OLResultsPage from "./pages/OLResultsPage";
 import ProfilePage from "./pages/ProfilePage";
+import OnboardingPage from "./pages/OnboardingPage";
 import PrivateRoute from "./components/PrivateRoute";
 
 function AppContent() {
@@ -45,6 +46,14 @@ function AppContent() {
 					/>
 					<Route path='/signin' element={<SignIn />} />
 					<Route path='/signup' element={<SignUp />} />
+					<Route
+						path='/onboarding'
+						element={
+							<PrivateRoute>
+								<OnboardingPage />
+							</PrivateRoute>
+						}
+					/>
 					<Route path='/signInNew' element={<Navigate to='/signin' replace />} />
 					<Route path='/signUp' element={<Navigate to='/signup' replace />} />
 					<Route path='*' element={<Navigate to='/' replace />} />

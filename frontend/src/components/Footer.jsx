@@ -1,91 +1,95 @@
 import { Link } from "react-router-dom";
-
-const LogoMark = () => (
-	<svg className='w-8 h-8' viewBox='0 0 32 32' fill='none'>
-		<rect width='32' height='32' rx='8' fill='url(#flogo)' />
-		<path d='M16 7L8 12v8l8 5 8-5v-8l-8-5z' stroke='#fff' strokeWidth='1.6' strokeLinejoin='round' fill='none' />
-		<path d='M16 7v10m0 0l8-5m-8 5l-8-5m8 5v8' stroke='#fff' strokeWidth='1.2' strokeLinejoin='round' opacity='0.6' />
-		<circle cx='16' cy='17' r='2.5' fill='#fff' />
-		<defs>
-			<linearGradient id='flogo' x1='0' y1='0' x2='32' y2='32'>
-				<stop stopColor='#6366F1' />
-				<stop offset='1' stopColor='#0EA5E9' />
-			</linearGradient>
-		</defs>
-	</svg>
-);
+import { LogoMark } from "./ui/Icons";
 
 export default function Footer() {
 	const year = new Date().getFullYear();
 
-	const platformLinks = [
-		{ label: "Home", href: "/" },
-		{ label: "Degree Recommendations", href: "/#pathways-section" },
-	];
-
-	const legalLinks = [
-		{ label: "Privacy Policy", href: "/privacy-policy" },
-		{ label: "Terms of Service", href: "/terms-of-service" },
-		{ label: "Cookie Policy", href: "/cookie-policy" },
-		{ label: "Accessibility", href: "/accessibility" },
+	const sections = [
+		{
+			heading: "Explore",
+			color: "text-blue-600",
+			links: [
+				{ label: "Home", href: "/" },
+				{ label: "O/L Stream Explorer", href: "/degree-recommendations/all-students" },
+				{ label: "A/L Degree Finder", href: "/degree-recommendations/al-students" },
+				{ label: "My Profile", href: "/profile" },
+			],
+		},
+		{
+			heading: "Account",
+			color: "text-indigo-600",
+			links: [
+				{ label: "Sign In", href: "/signin" },
+				{ label: "Create Account", href: "/signup" },
+				{ label: "Onboarding", href: "/onboarding" },
+			],
+		},
+		{
+			heading: "Legal",
+			color: "text-blue-500",
+			links: [
+				{ label: "Privacy Policy", href: "/privacy-policy" },
+				{ label: "Terms of Service", href: "/terms-of-service" },
+				{ label: "Cookie Policy", href: "/cookie-policy" },
+				{ label: "Accessibility", href: "/accessibility" },
+			],
+		},
 	];
 
 	return (
-		<footer
-			id='site-footer'
-			className='w-full mt-auto border-t shadow-[0_-8px_30px_-5px_rgba(14,165,233,0.12)] border-sky-100/80 bg-gradient-to-br from-sky-50 via-cyan-50 to-emerald-50/80'>
+		<footer id='site-footer' className='w-full mt-auto bg-white border-t border-slate-100'>
+			{/* Top stripe — colored accent line */}
+			<div className='w-full h-1 bg-gradient-to-r from-blue-600 to-indigo-500' />
+
 			<div className='px-4 mx-auto max-w-7xl sm:px-6 lg:px-8'>
-				<div className='grid grid-cols-1 gap-10 py-14 md:grid-cols-3 lg:gap-16'>
-					<div className='space-y-5'>
-						<div className='flex items-center gap-2.5'>
-							<LogoMark />
-							<span className='text-lg font-bold tracking-tight text-slate-900'>UniFinderLK</span>
-						</div>
-						<p className='max-w-xs text-sm leading-relaxed text-slate-500'>
-							AI-driven degree recommendation for Sri Lankan students. The app now focuses on one system: helping you
-							choose a degree path with clarity.
+				{/* Main grid */}
+				<div className='grid grid-cols-1 gap-6 py-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-6'>
+					{/* Brand column */}
+					<div className='space-y-2.5 md:col-span-2 lg:col-span-1'>
+						<Link to='/' className='flex items-center gap-2 no-underline group w-fit'>
+							<LogoMark className='transition-transform duration-300 w-7 h-7 group-hover:scale-105' />
+							<span className='text-base font-extrabold tracking-tight text-slate-900'>UniFinderLK</span>
+						</Link>
+
+						<p className='max-w-xs text-xs leading-relaxed text-slate-500'>
+							Discover the right university degree for your academic profile. Powered by real UGC data and AI matching —
+							built for Sri Lankan students.
 						</p>
 					</div>
 
-					<div className='space-y-4'>
-						<h4 className='text-sm font-semibold tracking-wider uppercase text-slate-900'>Platform</h4>
-						<ul className='pl-0 space-y-2.5 list-none'>
-							{platformLinks.map((link) => (
-								<li key={link.href}>
-									<Link
-										to={link.href}
-										className='text-sm no-underline transition-colors text-slate-500 hover:text-sky-600'>
-										{link.label}
-									</Link>
-								</li>
-							))}
-						</ul>
-					</div>
-
-					<div className='space-y-4'>
-						<h4 className='text-sm font-semibold tracking-wider uppercase text-slate-900'>Legal</h4>
-						<ul className='pl-0 space-y-2.5 list-none'>
-							{legalLinks.map((link) => (
-								<li key={link.href}>
-									<Link
-										to={link.href}
-										className='text-sm no-underline transition-colors text-slate-500 hover:text-sky-600'>
-										{link.label}
-									</Link>
-								</li>
-							))}
-						</ul>
-					</div>
+					{/* Link columns */}
+					{sections.map((section) => (
+						<div key={section.heading} className='space-y-2'>
+							<h4 className={`text-[11px] font-bold tracking-widest uppercase ${section.color}`}>{section.heading}</h4>
+							<ul className='pl-0 space-y-1.5 list-none'>
+								{section.links.map((link) => (
+									<li key={link.href}>
+										<Link
+											to={link.href}
+											className='text-xs no-underline transition-colors text-slate-500 hover:text-slate-900 hover:font-medium'>
+											{link.label}
+										</Link>
+									</li>
+								))}
+							</ul>
+						</div>
+					))}
 				</div>
 
-				<div className='flex flex-col items-center justify-between gap-4 py-6 text-xs border-t sm:flex-row border-slate-200 text-slate-400'>
-					<p>&copy; {year} UniFinderLK. All rights reserved.</p>
-					<div className='flex gap-5'>
-						<span>Degree-first</span>
-						<span className='w-0.5 h-3 bg-slate-200 rounded' />
+				{/* Bottom bar */}
+				<div className='flex flex-col items-center justify-between gap-2 py-3 text-xs border-t border-slate-100 sm:flex-row'>
+					<p className='text-slate-400 text-[11px]'>
+						&copy; {year} <span className='font-semibold text-slate-600'>UniFinderLK</span>. All rights reserved.
+					</p>
+					<div className='flex items-center gap-1.5 text-slate-400 text-[11px]'>
+						<span className='inline-block w-1.5 h-1.5 rounded-full bg-blue-500' />
+						<span>AI-powered</span>
+						<span className='mx-1 text-slate-200'>·</span>
+						<span className='inline-block w-1.5 h-1.5 rounded-full bg-indigo-500' />
+						<span>UGC-verified</span>
+						<span className='mx-1 text-slate-200'>·</span>
+						<span className='inline-block w-1.5 h-1.5 rounded-full bg-blue-400' />
 						<span>Private by design</span>
-						<span className='w-0.5 h-3 bg-slate-200 rounded' />
-						<span>Made in Sri Lanka</span>
 					</div>
 				</div>
 			</div>
