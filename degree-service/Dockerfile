@@ -3,6 +3,9 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
+ENV PORT=5001
+ENV PYTHONUNBUFFERED=1
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
@@ -28,7 +31,7 @@ EXPOSE 5001
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
-  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:5001/health')"
+  CMD sh -c 'python -c "import os, urllib.request; port=os.getenv(\"PORT\", \"5001\"); urllib.request.urlopen(f\"http://localhost:{port}/health\")"'
 
 # Start the application
 CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-5001}"]
