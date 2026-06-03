@@ -5,42 +5,8 @@ import { fetchAllDegreeCourses, fetchOLCareerTree } from "../api/DegreeAPI";
 import { fetchAcademicProfile } from "../api/academicApi";
 import olSubjectsConfig from "../config/ol_subjects_config.json";
 import LoadingState, { OL_STAGES } from "../components/LoadingState";
-
-const ArrowRightIcon = () => (
-	<svg className='w-4 h-4' fill='none' stroke='currentColor' strokeWidth='2' viewBox='0 0 24 24'>
-		<path strokeLinecap='round' strokeLinejoin='round' d='M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3' />
-	</svg>
-);
-
-const BookIcon = () => (
-	<svg className='w-5 h-5' fill='none' stroke='currentColor' strokeWidth='2' viewBox='0 0 24 24'>
-		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25'
-		/>
-	</svg>
-);
-
-const SpinnerIcon = () => (
-	<svg className='w-5 h-5 animate-spin' fill='none' viewBox='0 0 24 24'>
-		<circle className='opacity-25' cx='12' cy='12' r='10' stroke='currentColor' strokeWidth='4'></circle>
-		<path
-			className='opacity-75'
-			fill='currentColor'
-			d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'></path>
-	</svg>
-);
-
-const AlertIcon = () => (
-	<svg className='w-5 h-5 mt-0.5 shrink-0' fill='none' stroke='currentColor' strokeWidth='2' viewBox='0 0 24 24'>
-		<path
-			strokeLinecap='round'
-			strokeLinejoin='round'
-			d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z'
-		/>
-	</svg>
-);
+import { ArrowRightIcon, BookIcon, SpinnerIcon, GraduationIcon } from "../components/ui/Icons";
+import { useToast } from "../contexts/ToastContext";
 
 const CAREER_INTEREST_PROMPTS = [
 	"I love working with technology and solving complex problems",
@@ -75,9 +41,9 @@ export default function OLExplorerFlow() {
 		bucket_3: "",
 	});
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState("");
 	const [autofilled, setAutofilled] = useState(false);
-	const detailsRef = useRef(null); // ref to auto-open accordion
+	const [toast] = [useToast()];
+	const detailsRef = useRef(null);
 
 	// ── Autofill from saved profile ──────────────────────────────────────────
 	useEffect(() => {
@@ -137,7 +103,6 @@ export default function OLExplorerFlow() {
 		if (!isFormValid) return;
 
 		setLoading(true);
-		setError("");
 
 		try {
 			// Get all degree courses
@@ -169,21 +134,13 @@ export default function OLExplorerFlow() {
 				}
 			}
 
-			setError(errorMessage);
+			toast.error("Could Not Load Results", errorMessage);
 		} finally {
 			setLoading(false);
 		}
 	};
 
-	const GraduationIcon = () => (
-		<svg className='w-5 h-5' fill='none' stroke='currentColor' strokeWidth='1.8' viewBox='0 0 24 24'>
-			<path
-				strokeLinecap='round'
-				strokeLinejoin='round'
-				d='M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5'
-			/>
-		</svg>
-	);
+	// GraduationIcon is imported from the shared Icons library
 
 	// Input Step — results navigate to OLResultsPage
 	return (
@@ -196,7 +153,7 @@ export default function OLExplorerFlow() {
 
 				<div className='relative z-10 max-w-6xl px-6 mx-auto'>
 					<div className='inline-flex items-center gap-2 px-4 py-1.5 mb-4 text-xs font-bold tracking-widest uppercase rounded-full bg-white/10 text-emerald-50 border border-emerald-400/40'>
-						<GraduationIcon />
+						<GraduationIcon className='w-5 h-5' />
 						<span>O/L Stream & Degree Explorer</span>
 					</div>
 					<div className='grid items-center grid-cols-1 gap-12 md:grid-cols-2'>
@@ -273,10 +230,12 @@ export default function OLExplorerFlow() {
 										</span>
 									)}
 								</div>
-								<details ref={detailsRef} className='mb-2 overflow-hidden transition-all border group border-slate-200 rounded-2xl bg-slate-50 hover:border-emerald-200'>
+								<details
+									ref={detailsRef}
+									className='mb-2 overflow-hidden transition-all border group border-slate-200 rounded-2xl bg-slate-50 hover:border-emerald-200'>
 									<summary className='flex items-center gap-3 px-3 py-4 font-semibold cursor-pointer select-none text-slate-700 hover:text-slate-900'>
 										<div className='flex items-center justify-center w-8 rounded-lg bg-emerald-100 text-emerald-600'>
-											<BookIcon />
+											<BookIcon className='w-5 h-5' />
 										</div>
 										Add Your O/L Marks
 										<span className='ml-auto text-sm font-normal text-emerald-600 group-open:hidden'>Expand</span>
@@ -445,24 +404,14 @@ export default function OLExplorerFlow() {
 								`}>
 									{loading ?
 										<>
-											<SpinnerIcon /> Finding Streams & Degrees...
+											<SpinnerIcon className='w-5 h-5 animate-spin' /> Finding Streams & Degrees...
 										</>
 									:	<>
-											Find My A/L Streams & Degrees <ArrowRightIcon />
+											Find My A/L Streams & Degrees <ArrowRightIcon className='w-4 h-4' />
 										</>
 									}
 								</button>
 							</div>
-
-							{error && (
-								<div className='flex gap-3 p-4 mt-6 text-red-700 border rounded-xl bg-red-50 border-red-200/60'>
-									<AlertIcon />
-									<div>
-										<p className='font-semibold'>Error</p>
-										<p className='text-sm'>{error}</p>
-									</div>
-								</div>
-							)}
 						</>
 					}
 				</div>

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { ToastProvider } from "./contexts/ToastContext";
 import HomePage from "./pages/HomePage";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -76,9 +77,11 @@ function AppContent() {
 
 function App() {
 	return (
-		<Router>
-			<AppContent />
-		</Router>
+		<ToastProvider>
+			<Router>
+				<AppContent />
+			</Router>
+		</ToastProvider>
 	);
 }
 

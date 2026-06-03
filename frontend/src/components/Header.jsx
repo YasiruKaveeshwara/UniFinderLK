@@ -56,6 +56,8 @@ export default function Header() {
 		"/profile",
 		"/feedback",
 		"/about",
+		"/signin",
+		"/signup",
 	];
 	const hasDarkHero = DARK_HERO_PAGES.includes(location.pathname);
 	const atTop = hasDarkHero && !scrolled;

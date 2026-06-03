@@ -22,6 +22,7 @@ import {
 	BioSystemsTechIcon,
 	ArtsStreamIcon,
 } from "../components/ui/Icons";
+import { useToast } from "../contexts/ToastContext";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 const GRADES = ["A", "B", "C", "S", "W"];
@@ -119,7 +120,7 @@ export default function OnboardingPage() {
 
 	const [step, setStep] = useState(0);
 	const [saving, setSaving] = useState(false);
-	const [error, setError] = useState("");
+	const toast = useToast();
 
 	// O/L state
 	const [olCore, setOlCore] = useState({});
@@ -161,11 +162,10 @@ export default function OnboardingPage() {
 	// ── API calls ─────────────────────────────────────────────────────────────
 	const doSaveOL = async () => {
 		setSaving(true);
-		setError("");
 		try {
 			await saveOLSubjects({ core: olCore, bucket_1: bucket1, bucket_2: bucket2, bucket_3: bucket3 });
 		} catch (err) {
-			setError(err.message);
+			toast.error("Save Failed", err.message);
 			throw err;
 		} finally {
 			setSaving(false);
@@ -174,7 +174,6 @@ export default function OnboardingPage() {
 
 	const doSaveALAndProfile = async () => {
 		setSaving(true);
-		setError("");
 		try {
 			const combinedInterests = [
 				...selectedInterests,
@@ -189,7 +188,7 @@ export default function OnboardingPage() {
 				interests: combinedInterests || undefined,
 			});
 		} catch (err) {
-			setError(err.message);
+			toast.error("Save Failed", err.message);
 			throw err;
 		} finally {
 			setSaving(false);
@@ -197,15 +196,9 @@ export default function OnboardingPage() {
 	};
 
 	// ── Navigation ────────────────────────────────────────────────────────────
-	const goNext = () => {
-		setError("");
-		setStep((s) => s + 1);
-	};
+	const goNext = () => setStep((s) => s + 1);
 
-	const goBack = () => {
-		setError("");
-		setStep((s) => Math.max(s - 1, 0));
-	};
+	const goBack = () => setStep((s) => Math.max(s - 1, 0));
 
 	const handleOLSave = async () => {
 		try {
@@ -799,16 +792,6 @@ export default function OnboardingPage() {
 			{/* ── Main content card (same -mt-16 pull-up as ALWizardFlow) ── */}
 			<div className='relative z-20 max-w-6xl px-6 mx-auto -mt-16'>
 				<div className='p-8 mb-6 bg-white border shadow-2xl sm:p-10 border-blue-100/60 rounded-3xl'>
-					{/* Error banner */}
-					{error && (
-						<div className='flex gap-3 p-4 mb-6 text-red-700 border border-red-200 rounded-xl bg-red-50'>
-							<div>
-								<p className='font-bold'>Something went wrong</p>
-								<p className='text-sm mt-0.5'>{error}</p>
-							</div>
-						</div>
-					)}
-
 					{RENDERERS[step]?.()}
 				</div>
 			</div>

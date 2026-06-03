@@ -4,6 +4,34 @@ import { StreamIcon } from "./StreamIcons";
 import { SRI_LANKA_DISTRICTS } from "../../constants/degreeConstants";
 import { CheckIcon, InfoIcon, AlertIcon, MapPinIcon } from "../ui/Icons";
 
+// ── Stream Color Configuration matching Onboarding ───────────────────────────
+const STREAM_COLORS = {
+	"physical-science": {
+		bg: "bg-sky-100 text-sky-600",
+		activeBg: "bg-sky-200 text-sky-700",
+	},
+	"biological-science": {
+		bg: "bg-emerald-100 text-emerald-600",
+		activeBg: "bg-emerald-200 text-emerald-700",
+	},
+	commerce: {
+		bg: "bg-blue-100 text-blue-600",
+		activeBg: "bg-blue-200 text-blue-700",
+	},
+	"engineering-technology": {
+		bg: "bg-orange-100 text-orange-600",
+		activeBg: "bg-orange-200 text-orange-700",
+	},
+	"bio-systems-technology": {
+		bg: "bg-teal-100 text-teal-600",
+		activeBg: "bg-teal-200 text-teal-700",
+	},
+	arts: {
+		bg: "bg-violet-100 text-violet-600",
+		activeBg: "bg-violet-200 text-violet-700",
+	},
+};
+
 // ── StreamSelector ────────────────────────────────────────────────────────────
 export default function StreamSelector({ formData, setFormData, subjectRuleError }) {
 	const selectedStream = AL_STREAMS.find((s) => s.name === formData.stream);
@@ -36,12 +64,18 @@ export default function StreamSelector({ formData, setFormData, subjectRuleError
 			<div className='grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3'>
 				{AL_STREAMS.map((stream) => {
 					const isSelected = formData.stream === stream.name;
+					const colors = STREAM_COLORS[stream.id] || {
+						bg: "bg-blue-100 text-blue-600",
+						activeBg: "bg-blue-200 text-blue-700",
+					};
+					const colorClasses = isSelected ? colors.activeBg : colors.bg;
+
 					return (
 						<button
 							key={stream.id}
 							onClick={() => handleStreamSelect(stream)}
 							className={`
-								relative p-4 rounded-2xl border-2 text-left transition-all duration-200
+								relative px-4 rounded-2xl border-2 text-left transition-all duration-200
 								hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400
 								${
 									isSelected ?
@@ -52,12 +86,12 @@ export default function StreamSelector({ formData, setFormData, subjectRuleError
 							{/* Icon + name — horizontal */}
 							<div className='flex items-center gap-3'>
 								<div
-									className={`flex-shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br ${stream.accentFrom} ${stream.accentTo} text-white shadow-sm`}>
+									className={`flex-shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-xl transition-colors duration-200 ${colorClasses} shadow-sm`}>
 									<StreamIcon iconKey={stream.icon} className='w-5 h-5' />
 								</div>
-								<div>
+								<div className=''>
 									<h3
-										className={`font-bold text-sm leading-tight mb-0.5 ${isSelected ? "text-blue-900" : "text-slate-800"}`}>
+										className={`font-bold text-sm mt-3 leading-tight mb-0.5 ${isSelected ? "text-blue-900" : "text-slate-800"}`}>
 										{stream.name}
 									</h3>
 									<p className='text-xs leading-snug text-slate-500'>{stream.tagline}</p>

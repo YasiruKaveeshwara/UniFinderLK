@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { fetchAcademicProfile, saveOLSubjects } from "../../api/academicApi";
-import { ClipboardIcon, CheckCircleIcon, AlertCircleIcon, SpinnerIcon } from "../ui/Icons";
+import { ClipboardIcon, SpinnerIcon } from "../ui/Icons";
 import olSubjectsConfig from "../../config/ol_subjects_config.json";
+import { useToast } from "../../contexts/ToastContext";
 
 // Build id → display name lookup across all three buckets
 const BUCKET_SUBJECT_NAME = {};
@@ -42,8 +43,7 @@ export default function OLSubjectsCard() {
 	const [loadingFetch, setLoadingFetch] = useState(true);
 	const [saving, setSaving] = useState(false);
 	const [editMode, setEditMode] = useState(false);
-	const [success, setSuccess] = useState("");
-	const [error, setError] = useState("");
+	const toast = useToast();
 
 	const [core, setCore] = useState({});
 	const [bucket1, setBucket1] = useState("");
@@ -62,11 +62,11 @@ export default function OLSubjectsCard() {
 			setBucket2(ol.bucket_2 || "");
 			setBucket3(ol.bucket_3 || "");
 		} catch (err) {
-			setError(err.message);
+			toast.error("Fetch Failed", err.message || "Could not load academic profile.");
 		} finally {
 			setLoadingFetch(false);
 		}
-	}, [currentUser]);
+	}, [currentUser, toast]);
 
 	useEffect(() => {
 		loadProfile();
@@ -74,25 +74,21 @@ export default function OLSubjectsCard() {
 
 	const handleCoreChange = (subjectId, grade) => {
 		setCore((prev) => ({ ...prev, [subjectId]: grade }));
-		setSuccess("");
 	};
 
 	const handleBucketGradeChange = (bucket, grade) => {
 		setCore((prev) => ({ ...prev, [`${bucket}_grade`]: grade }));
-		setSuccess("");
 	};
 
 	const handleSave = async () => {
-		setError("");
-		setSuccess("");
 		setSaving(true);
 		try {
 			const res = await saveOLSubjects({ core, bucket_1: bucket1, bucket_2: bucket2, bucket_3: bucket3 });
 			setProfile(res.data);
 			setEditMode(false);
-			setSuccess("O/L subjects saved successfully!");
+			toast.success("O/L Subjects Saved", "Your O/L results have been saved to your profile.");
 		} catch (err) {
-			setError(err.message);
+			toast.error("Save Failed", err.message || "Could not save your O/L subjects.");
 		} finally {
 			setSaving(false);
 		}
@@ -131,11 +127,7 @@ export default function OLSubjectsCard() {
 				{hasSavedData && (
 					<button
 						type='button'
-						onClick={() => {
-							setEditMode(!editMode);
-							setSuccess("");
-							setError("");
-						}}
+						onClick={() => setEditMode(!editMode)}
 						className={`px-3 py-1.5 text-xs font-semibold transition-colors border rounded-lg ${
 							editMode ?
 								"text-slate-600 border-slate-200 bg-slate-100 hover:bg-slate-200"
@@ -145,20 +137,6 @@ export default function OLSubjectsCard() {
 					</button>
 				)}
 			</div>
-
-			{/* Alerts */}
-			{success && (
-				<div className='flex items-center gap-3 p-3 mb-4 border rounded-xl bg-teal-50 border-teal-200/60'>
-					<CheckCircleIcon className='w-4 h-4 text-teal-500 shrink-0' />
-					<p className='text-xs font-medium text-teal-700'>{success}</p>
-				</div>
-			)}
-			{error && (
-				<div className='flex items-center gap-3 p-3 mb-4 border rounded-xl bg-red-50 border-red-200/60'>
-					<AlertCircleIcon className='w-4 h-4 text-red-500 shrink-0' />
-					<p className='text-xs font-medium text-red-700'>{error}</p>
-				</div>
-			)}
 
 			{!hasSavedData && !editMode ?
 				<div className='flex flex-col items-center gap-3 py-8 text-center'>
@@ -257,7 +235,6 @@ export default function OLSubjectsCard() {
 														value={value}
 														onChange={(e) => {
 															setValue(e.target.value);
-															setSuccess("");
 														}}
 														className='w-full px-2 py-1 text-xs bg-white border rounded-lg border-slate-200 focus:border-teal-500 focus:ring-1 focus:ring-teal-500/20 focus:outline-none'>
 														<option value=''>Select subject...</option>

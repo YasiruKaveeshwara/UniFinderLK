@@ -11,8 +11,9 @@ import {
 	signout,
 } from "../redux/User/userSlice";
 import { updateUserProfile, deleteUserAccount } from "../api/userApi";
-import { SpinnerIcon, AlertCircleIcon, CheckCircleIcon, UserIcon } from "../components/ui/Icons";
+import { SpinnerIcon, UserIcon } from "../components/ui/Icons";
 import Reveal from "../components/ui/Reveal";
+import { useToast } from "../contexts/ToastContext";
 import OLSubjectsCard from "../components/profile/OLSubjectsCard";
 import ALSubjectsCard from "../components/profile/ALSubjectsCard";
 import StarRating from "../components/feedback/StarRating";
@@ -22,7 +23,7 @@ import { getMyFeedback, updateFeedback, deleteFeedback } from "../api/feedbackAp
 export default function ProfilePage() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { currentUser, loading, error } = useSelector((state) => state.user);
+	const { currentUser, loading } = useSelector((state) => state.user);
 
 	const [formData, setFormData] = useState({
 		name: currentUser?.name || "",
@@ -30,11 +31,11 @@ export default function ProfilePage() {
 		password: "",
 		confirmPassword: "",
 	});
-	const [success, setSuccess] = useState("");
 	const [pwMismatch, setPwMismatch] = useState(false);
 	const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+	const toast = useToast();
 
 	// ── My Feedback state ────────────────────────────────────────────────────
 	const [myFeedbacks, setMyFeedbacks] = useState([]);
@@ -42,7 +43,6 @@ export default function ProfilePage() {
 	const [editingFb, setEditingFb] = useState(null); // feedback being edited
 	const [editForm, setEditForm] = useState({ rating: 0, message: "", section: "general", isAnonymous: false });
 	const [editSaving, setEditSaving] = useState(false);
-	const [editError, setEditError] = useState("");
 	const [deleteConfirmId, setDeleteConfirmId] = useState(null);
 
 	const loadMyFeedback = useCallback(async () => {
@@ -61,17 +61,17 @@ export default function ProfilePage() {
 	const handleEditSave = async () => {
 		if (!editingFb) return;
 		if (editForm.message.trim().length < 10) {
-			setEditError("Feedback must be at least 10 characters.");
+			toast.warning("Too Short", "Feedback must be at least 10 characters.");
 			return;
 		}
 		setEditSaving(true);
-		setEditError("");
 		try {
 			await updateFeedback(editingFb._id, editForm);
 			setEditingFb(null);
 			loadMyFeedback();
+			toast.success("Feedback Updated", "Your feedback has been saved.");
 		} catch (e) {
-			setEditError(e.message || "Failed to update.");
+			toast.error("Update Failed", e.message || "Failed to update feedback.");
 		}
 		setEditSaving(false);
 	};
@@ -86,18 +86,17 @@ export default function ProfilePage() {
 
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.id]: e.target.value });
-		setSuccess("");
 		setPwMismatch(false);
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setSuccess("");
 		setPwMismatch(false);
 
 		// Validate password match if a new password is being set
 		if (formData.password && formData.password !== formData.confirmPassword) {
 			setPwMismatch(true);
+			toast.warning("Password Mismatch", "The passwords you entered do not match.");
 			return;
 		}
 
@@ -107,7 +106,7 @@ export default function ProfilePage() {
 		if (formData.password) updates.password = formData.password;
 
 		if (Object.keys(updates).length === 0) {
-			setSuccess("No changes to save.");
+			toast.info("No Changes", "There are no changes to save.");
 			return;
 		}
 
@@ -116,9 +115,10 @@ export default function ProfilePage() {
 			const data = await updateUserProfile(updates);
 			dispatch(updateUserSuccess(data));
 			setFormData((prev) => ({ ...prev, password: "", confirmPassword: "" }));
-			setSuccess("Profile updated successfully!");
+			toast.success("Profile Updated", "Your profile has been saved successfully.");
 		} catch (err) {
 			dispatch(updateUserFailure(err.message));
+			toast.error("Update Failed", err.message || "Could not save your profile.");
 		}
 	};
 
@@ -194,20 +194,7 @@ export default function ProfilePage() {
 							<h2 className='text-lg font-bold tracking-tight text-slate-900'>My Profile</h2>
 							<p className='text-xs text-slate-400'>Manage your account information and academic profile</p>
 						</div>
-						{/* Alerts */}
-						{success && (
-							<div className='flex items-center gap-3 p-4 mb-6 border rounded-xl bg-blue-50 border-blue-200/60'>
-								<CheckCircleIcon className='w-5 h-5 text-blue-500 shrink-0' />
-								<p className='text-sm font-medium text-blue-700'>{success}</p>
-							</div>
-						)}
-						{error && (
-							<div className='flex items-start gap-3 p-4 mb-6 border rounded-xl bg-red-50 border-red-200/60'>
-								<AlertCircleIcon className='w-5 h-5 mt-0.5 text-red-500 shrink-0' />
-								<p className='text-sm font-medium text-red-700'>{error}</p>
-							</div>
-						)}
-
+						
 						<form onSubmit={handleSubmit} className='space-y-4'>
 							{/* Row 1: Full Name + Email */}
 							<div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
@@ -502,7 +489,7 @@ export default function ProfilePage() {
 													/>
 													<span className='text-xs font-semibold text-slate-600'>Submit as Anonymous</span>
 												</label>
-												{editError && <p className='text-xs font-medium text-red-600'>{editError}</p>}
+
 												<div className='flex gap-2'>
 													<button
 														type='button'
@@ -530,7 +517,6 @@ export default function ProfilePage() {
 														section: fb.section,
 														isAnonymous: fb.isAnonymous,
 													});
-													setEditError("");
 												}}
 												onDelete={() => setDeleteConfirmId(fb._id)}
 											/>

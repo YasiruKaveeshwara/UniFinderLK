@@ -10,9 +10,9 @@ import {
 	UserIcon,
 	CheckCircleIcon,
 	SpinnerIcon,
-	AlertCircleIcon,
 } from "../components/ui/Icons";
 import { saveOLSubjects } from "../api/academicApi";
+import { useToast } from "../contexts/ToastContext";
 
 export default function OLResultsPage() {
 	const navigate = useNavigate();
@@ -21,8 +21,8 @@ export default function OLResultsPage() {
 	const currentUser = useSelector((state) => state.user?.currentUser);
 	const isLoggedIn = Boolean(currentUser);
 
-	const [saveStatus, setSaveStatus] = useState("idle"); // idle | saving | saved | error
-	const [saveError, setSaveError] = useState("");
+	const [saveStatus, setSaveStatus] = useState("idle"); // idle | saving | saved
+	const toast = useToast();
 
 	// If no results (e.g. direct navigation), redirect back
 	if (!results) {
@@ -69,7 +69,6 @@ export default function OLResultsPage() {
 		}
 
 		setSaveStatus("saving");
-		setSaveError("");
 
 		try {
 			await saveOLSubjects({
@@ -79,9 +78,10 @@ export default function OLResultsPage() {
 				bucket_3: olMarks.bucket_3 || "",
 			});
 			setSaveStatus("saved");
+			toast.success("Subjects Saved", "Your O/L subjects have been saved to your profile.");
 		} catch (err) {
-			setSaveStatus("error");
-			setSaveError(err.message || "Failed to save subjects");
+			setSaveStatus("idle");
+			toast.error("Save Failed", err.message || "Failed to save subjects.");
 		}
 	};
 
@@ -220,12 +220,6 @@ export default function OLResultsPage() {
 											}
 										</button>
 									}
-									{saveStatus === "error" && (
-										<div className='flex items-center gap-1.5 text-xs font-medium text-red-600'>
-											<AlertCircleIcon className='w-3.5 h-3.5' />
-											{saveError}
-										</div>
-									)}
 								</>
 							)}
 						</div>

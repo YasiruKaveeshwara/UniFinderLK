@@ -12,6 +12,7 @@ import { AL_STREAMS, getSubjectRuleError } from "../constants/degreeConstants";
 import { fetchDegreeRecommendations } from "../api/DegreeAPI";
 import { fetchAcademicProfile } from "../api/academicApi";
 import { ArrowRightIcon, ArrowLeftIcon, SpinnerIcon, GraduationIcon, RefreshIcon } from "../components/ui/Icons";
+import { useToast } from "../contexts/ToastContext";
 
 const STEPS = ["Stream & District", "Z-Score", "Interests", "Results"];
 
@@ -39,9 +40,9 @@ export default function ALWizardFlow() {
 	const [formData, setFormData] = useState({ stream: "", subjects: [], zscore: "", interests: "", district: "" });
 	const [loading, setLoading] = useState(false);
 	const [results, setResults] = useState(null);
-	const [error, setError] = useState("");
 	const [filter, setFilter] = useState("all");
 	const [autofilled, setAutofilled] = useState(false);
+	const toast = useToast();
 
 	// Stepper display: while loading show step 3 as active; on results mark all done (step 4)
 	const progressDisplayStep =
@@ -118,7 +119,6 @@ export default function ALWizardFlow() {
 
 	const handleSubmit = async () => {
 		setLoading(true);
-		setError("");
 		try {
 			const scenario = detectScenario(formData);
 			const maxResults = scenario?.id === "s1" ? 10 : 100;
@@ -147,7 +147,7 @@ export default function ALWizardFlow() {
 			if (Array.isArray(detail)) msg = detail.map((e) => e.msg || JSON.stringify(e)).join("; ");
 			else if (typeof detail === "string") msg = detail;
 			else if (detail?.msg) msg = detail.msg;
-			setError(msg);
+			toast.error("Could Not Load Results", msg);
 		} finally {
 			setLoading(false);
 		}
@@ -358,16 +358,6 @@ export default function ALWizardFlow() {
 				{currentStep < 3 && (
 					<div className='p-8 mb-6 bg-white border shadow-2xl sm:p-10 border-blue-100/60 rounded-3xl'>
 						{renderStep()}
-
-						{/* Error */}
-						{error && (
-							<div className='flex gap-3 p-4 mt-6 text-red-700 border border-red-200 rounded-xl bg-red-50'>
-								<div>
-									<p className='font-bold'>Something went wrong</p>
-									<p className='text-sm mt-0.5'>{error}</p>
-								</div>
-							</div>
-						)}
 
 						{/* Navigation */}
 						<div className='flex items-center justify-between gap-4 pt-6 mt-8 border-t border-slate-100'>

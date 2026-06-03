@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { signInStart, signInSuccess } from "../redux/User/userSlice";
 import {
 	SpinnerIcon,
-	AlertCircleIcon,
 	GraduationIcon,
 	ArrowRightIcon,
 	CheckIcon,
@@ -12,6 +11,7 @@ import {
 	UserIcon,
 } from "../components/ui/Icons";
 import Reveal from "../components/ui/Reveal";
+import { useToast } from "../contexts/ToastContext";
 
 const EyeIcon = ({ open }) =>
 	open ?
@@ -50,18 +50,17 @@ const FEATURES = [
 
 export default function SignUp() {
 	const [formdata, setFormdata] = useState({});
-	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const API_BASE = process.env.REACT_APP_BACKEND_URL;
+	const toast = useToast();
 
 	const handleChange = (e) => setFormdata({ ...formdata, [e.target.id]: e.target.value });
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setError(false);
 		try {
 			setLoading(true);
 			const res = await fetch(`${API_BASE}/api/auth/signup`, {
@@ -73,7 +72,7 @@ export default function SignUp() {
 			const data = await res.json().catch(() => ({}));
 			setLoading(false);
 			if (!res.ok || data.success === false) {
-				setError(data.message || "Sign up failed. Username or email may already exist.");
+				toast.error("Sign Up Failed", data.message || "Username or email may already exist.");
 				return;
 			}
 
@@ -98,7 +97,7 @@ export default function SignUp() {
 			navigate("/signin");
 		} catch (err) {
 			setLoading(false);
-			setError("Something went wrong. Please try again.");
+			toast.error("Something Went Wrong", "Please try again.");
 		}
 	};
 
@@ -224,14 +223,6 @@ export default function SignUp() {
 							</div>
 
 							<h2 className='mb-4 text-2xl font-extrabold text-slate-900'>Join UniFinderLK</h2>
-
-							{/* Error */}
-							{error && (
-								<div className='flex items-start gap-3 p-4 mb-6 border rounded-xl bg-red-50 border-red-200/60'>
-									<AlertCircleIcon className='w-5 h-5 mt-0.5 text-red-500 shrink-0' />
-									<p className='text-sm font-medium text-red-700'>{error}</p>
-								</div>
-							)}
 
 							<form onSubmit={handleSubmit} className='space-y-5'>
 								{/* Full Name */}

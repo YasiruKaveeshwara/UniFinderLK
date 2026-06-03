@@ -1,16 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { fetchAcademicProfile, saveALSubjects } from "../../api/academicApi";
-import {
-	GraduationIcon,
-	CheckCircleIcon,
-	AlertCircleIcon,
-	SpinnerIcon,
-	MapPinIcon,
-	ChartBarIcon,
-	LightbulbIcon,
-} from "../ui/Icons";
+import { GraduationIcon, SpinnerIcon, MapPinIcon, ChartBarIcon, LightbulbIcon } from "../ui/Icons";
 import { SRI_LANKA_DISTRICTS, AL_STREAMS } from "../../constants/degreeConstants";
+import { useToast } from "../../contexts/ToastContext";
 
 /**
  * ALSubjectsCard — displays and allows editing of saved A/L details on the Profile page.
@@ -23,8 +16,7 @@ export default function ALSubjectsCard() {
 	const [loadingFetch, setLoadingFetch] = useState(true);
 	const [saving, setSaving] = useState(false);
 	const [editMode, setEditMode] = useState(false);
-	const [success, setSuccess] = useState("");
-	const [error, setError] = useState("");
+	const toast = useToast();
 
 	const [stream, setStream] = useState("");
 	const [subjects, setSubjects] = useState(["", "", ""]);
@@ -45,19 +37,17 @@ export default function ALSubjectsCard() {
 			setZscore(al.zscore !== null && al.zscore !== undefined ? String(al.zscore) : "");
 			setInterests(al.interests || "");
 		} catch (err) {
-			setError(err.message);
+			toast.error("Fetch Failed", err.message || "Could not load academic profile.");
 		} finally {
 			setLoadingFetch(false);
 		}
-	}, [currentUser]);
+	}, [currentUser, toast]);
 
 	useEffect(() => {
 		loadProfile();
 	}, [loadProfile]);
 
 	const handleSave = async () => {
-		setError("");
-		setSuccess("");
 		setSaving(true);
 		try {
 			const res = await saveALSubjects({
@@ -69,9 +59,9 @@ export default function ALSubjectsCard() {
 			});
 			setProfile(res.data);
 			setEditMode(false);
-			setSuccess("A/L details saved successfully!");
+			toast.success("A/L Details Saved", "Your A/L details have been saved to your profile.");
 		} catch (err) {
-			setError(err.message);
+			toast.error("Save Failed", err.message || "Could not save your A/L details.");
 		} finally {
 			setSaving(false);
 		}
@@ -110,11 +100,7 @@ export default function ALSubjectsCard() {
 				{hasSavedData && (
 					<button
 						type='button'
-						onClick={() => {
-							setEditMode(!editMode);
-							setSuccess("");
-							setError("");
-						}}
+						onClick={() => setEditMode(!editMode)}
 						className={`px-3 py-1.5 text-xs font-semibold transition-colors border rounded-lg ${
 							editMode ?
 								"text-slate-600 border-slate-200 bg-slate-100 hover:bg-slate-200"
@@ -124,20 +110,6 @@ export default function ALSubjectsCard() {
 					</button>
 				)}
 			</div>
-
-			{/* Alerts */}
-			{success && (
-				<div className='flex items-center gap-3 p-3 mb-4 border rounded-xl bg-blue-50 border-blue-200/60'>
-					<CheckCircleIcon className='w-4 h-4 text-blue-500 shrink-0' />
-					<p className='text-xs font-medium text-blue-700'>{success}</p>
-				</div>
-			)}
-			{error && (
-				<div className='flex items-center gap-3 p-3 mb-4 border rounded-xl bg-red-50 border-red-200/60'>
-					<AlertCircleIcon className='w-4 h-4 text-red-500 shrink-0' />
-					<p className='text-xs font-medium text-red-700'>{error}</p>
-				</div>
-			)}
 
 			{!hasSavedData && !editMode ?
 				<div className='flex flex-col items-center gap-3 py-8 text-center'>
@@ -169,7 +141,6 @@ export default function ALSubjectsCard() {
 									value={stream}
 									onChange={(e) => {
 										setStream(e.target.value);
-										setSuccess("");
 									}}
 									className='w-full px-3 py-2.5 text-sm border rounded-xl bg-slate-50 border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none'>
 									<option value=''>Select stream...</option>
@@ -202,7 +173,6 @@ export default function ALSubjectsCard() {
 														const next = [...subjects];
 														next[i] = e.target.value;
 														setSubjects(next);
-														setSuccess("");
 													}}
 													className='px-3 py-2 text-sm border rounded-xl bg-slate-50 border-slate-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 focus:outline-none'>
 													<option value=''>Subject {i + 1}...</option>
@@ -222,7 +192,6 @@ export default function ALSubjectsCard() {
 														const next = [...subjects];
 														next[i] = e.target.value;
 														setSubjects(next);
-														setSuccess("");
 													}}
 													placeholder={`Subject ${i + 1}`}
 													className='px-3 py-2 text-sm border rounded-xl bg-slate-50 border-slate-200 placeholder:text-slate-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 focus:outline-none'
@@ -253,7 +222,6 @@ export default function ALSubjectsCard() {
 									value={district}
 									onChange={(e) => {
 										setDistrict(e.target.value);
-										setSuccess("");
 									}}
 									className='w-full px-3 py-2.5 text-sm border rounded-xl bg-slate-50 border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none'>
 									<option value=''>Select district...</option>
@@ -284,7 +252,6 @@ export default function ALSubjectsCard() {
 										value={zscore}
 										onChange={(e) => {
 											setZscore(e.target.value);
-											setSuccess("");
 										}}
 										placeholder='e.g. 1.5432'
 										className='w-full px-3 py-2.5 text-sm border rounded-xl bg-slate-50 border-slate-200 placeholder:text-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none'
@@ -308,7 +275,6 @@ export default function ALSubjectsCard() {
 								value={interests}
 								onChange={(e) => {
 									setInterests(e.target.value);
-									setSuccess("");
 								}}
 								placeholder='Your interests, career goals, and ambitions...'
 								rows='3'

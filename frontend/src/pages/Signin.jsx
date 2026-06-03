@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signInFailure, signInStart, signInSuccess } from "../redux/User/userSlice";
 import {
 	SpinnerIcon,
-	AlertCircleIcon,
 	GraduationIcon,
 	ArrowRightIcon,
 	CheckIcon,
@@ -12,6 +11,7 @@ import {
 	UserIcon,
 } from "../components/ui/Icons";
 import Reveal from "../components/ui/Reveal";
+import { useToast } from "../contexts/ToastContext";
 
 const EyeIcon = ({ open }) =>
 	open ?
@@ -45,6 +45,12 @@ export default function SignIn() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const API_BASE = process.env.REACT_APP_BACKEND_URL;
+	const toast = useToast();
+
+	// Bridge Redux error → toast notification
+	useEffect(() => {
+		if (error) toast.error("Sign In Failed", error);
+	}, [error]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	const handleChange = (e) => setFormdata({ ...formdata, [e.target.id]: e.target.value });
 
@@ -173,14 +179,6 @@ export default function SignIn() {
 							</div>
 
 							<h2 className='mb-1 mb-4 text-2xl font-extrabold text-slate-900'>Sign In</h2>
-
-							{/* Error */}
-							{error && (
-								<div className='flex items-start gap-3 p-4 mb-6 border rounded-xl bg-red-50 border-red-200/60'>
-									<AlertCircleIcon className='w-5 h-5 mt-0.5 text-red-500 shrink-0' />
-									<p className='text-sm font-medium text-red-700'>{error}</p>
-								</div>
-							)}
 
 							<form onSubmit={handleSubmit} className='space-y-5'>
 								{/* Email */}
