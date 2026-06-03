@@ -26,7 +26,7 @@ function ScoreTooltip({ label, title, desc, className = "" }) {
 				className='w-64 overflow-hidden text-left border shadow-2xl pointer-events-none rounded-xl border-emerald-400/30'>
 				{/* Header accent */}
 				<div className='h-1 bg-gradient-to-r from-teal-400 to-emerald-400' />
-				<div className='p-3 bg-gradient-to-br from-teal-900 via-emerald-900 to-teal-900'>
+				<div className='p-3 bg-gradient-to-br from-teal-700 via-emerald-600 to-teal-600'>
 					<p className='mb-1 text-xs font-bold tracking-wide text-emerald-200'>{title}</p>
 					<p className='text-xs leading-relaxed text-emerald-100/80'>{desc}</p>
 				</div>
@@ -177,7 +177,7 @@ export default function CareerPathwayTree({ treeData }) {
 					{/* Soft glow */}
 					<div className='absolute inset-0 bg-gradient-to-r from-teal-400 to-emerald-500 rounded-3xl blur-xl opacity-20' />
 
-					<div className='relative p-8 overflow-hidden text-center border shadow-2xl bg-gradient-to-br from-teal-900 via-emerald-800 to-teal-900 rounded-3xl border-white/10'>
+					<div className='relative p-8 overflow-hidden text-center border shadow-2xl bg-gradient-to-br from-teal-700 via-emerald-600 to-teal-600 rounded-3xl border-white/10'>
 						{/* Background orbs */}
 						<div className='absolute top-0 right-0 w-56 h-56 rounded-full pointer-events-none bg-emerald-500/20 blur-3xl' />
 						<div className='absolute bottom-0 left-0 w-56 h-56 rounded-full pointer-events-none bg-teal-400/15 blur-3xl' />

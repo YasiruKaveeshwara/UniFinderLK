@@ -334,3 +334,22 @@ export function getSubjectRuleError(streamName, subjects) {
 
 	return "";
 }
+
+export const INTEREST_SUGGESTIONS = [
+	"Engineering",
+	"Medicine",
+	"Computer Science",
+	"Law",
+	"Business",
+	"Architecture",
+	"Agriculture",
+	"Education",
+	"Arts & Design",
+	"Journalism",
+	"Psychology",
+	"Finance",
+	"Data Science",
+	"Biotechnology",
+	"Environmental Science",
+	"Social Work",
+];

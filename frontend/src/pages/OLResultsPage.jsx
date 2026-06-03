@@ -88,7 +88,7 @@ export default function OLResultsPage() {
 	return (
 		<div className='min-h-screen pb-20 bg-slate-50'>
 			{/* Hero Header */}
-			<div className='relative pt-24 overflow-hidden border-b pb-28 border-green-900/40 bg-gradient-to-br from-teal-900 via-emerald-800 to-teal-900'>
+			<div className='relative pt-24 overflow-hidden border-b pb-28 border-green-900/40 bg-gradient-to-br from-teal-700 via-emerald-600 to-teal-600'>
 				{/* Ambient Blobs */}
 				<div className='absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/20 rounded-full blur-[120px] pointer-events-none mix-blend-screen' />
 				<div className='absolute bottom-0 left-10 w-[400px] h-[400px] bg-teal-400/15 rounded-full blur-[100px] pointer-events-none mix-blend-screen' />

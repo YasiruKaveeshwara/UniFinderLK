@@ -320,7 +320,7 @@ export default function ALWizardFlow() {
 	return (
 		<div className='min-h-screen pb-20 bg-slate-50'>
 			{/* ── Hero header ── */}
-			<div className='relative pt-24 overflow-hidden border-b pb-28 border-blue-900/30 bg-gradient-to-br from-blue-900 via-indigo-800 to-blue-900'>
+			<div className='relative pt-24 overflow-hidden border-b pb-28 border-blue-900/30 bg-gradient-to-br from-blue-700 via-indigo-600 to-blue-600'>
 				{/* Ambient blobs */}
 				<div className='absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-400/20 rounded-full blur-[120px] pointer-events-none mix-blend-screen' />
 				<div className='absolute bottom-0 left-10 w-[400px] h-[400px] bg-blue-400/15 rounded-full blur-[100px] pointer-events-none mix-blend-screen' />

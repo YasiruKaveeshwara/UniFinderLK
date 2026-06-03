@@ -15,6 +15,7 @@ import PrivateRoute from "./components/PrivateRoute";
 function AppContent() {
 	const location = useLocation();
 	const isHomePage = location.pathname === "/";
+	const isOnboarding = location.pathname === "/onboarding";
 
 	useEffect(() => {
 		if (isHomePage) {
@@ -27,8 +28,8 @@ function AppContent() {
 	}, [isHomePage]);
 
 	return (
-		<div className='flex flex-col min-h-screen bg-gradient-to-b from-sky-100 via-sky-50 to-emerald-100/80'>
-			<Header />
+		<div className='flex flex-col min-h-screen bg-white'>
+			{!isOnboarding && <Header />}
 			<main className='flex-grow bg-transparent'>
 				<Routes>
 					<Route path='/' element={<HomePage />} />
@@ -59,7 +60,7 @@ function AppContent() {
 					<Route path='*' element={<Navigate to='/' replace />} />
 				</Routes>
 			</main>
-			<Footer />
+			{!isOnboarding && <Footer />}
 		</div>
 	);
 }

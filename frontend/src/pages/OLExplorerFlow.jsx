@@ -176,7 +176,7 @@ export default function OLExplorerFlow() {
 	return (
 		<div className='min-h-screen pb-20 bg-slate-50'>
 			{/* Header */}
-			<div className='relative pt-24 pb-32 overflow-hidden border-b border-teal-800/50 bg-gradient-to-br from-teal-900 via-emerald-800 to-teal-900'>
+			<div className='relative pt-24 pb-32 overflow-hidden border-b border-teal-800/50 bg-gradient-to-br from-teal-700 via-emerald-600 to-teal-600'>
 				{/* Ambient Blobs */}
 				<div className='absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/20 rounded-full blur-[120px] pointer-events-none mix-blend-screen' />
 				<div className='absolute bottom-0 left-10 w-[400px] h-[400px] bg-cyan-500/20 rounded-full blur-[100px] pointer-events-none mix-blend-screen' />

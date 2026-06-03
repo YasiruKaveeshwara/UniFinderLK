@@ -193,7 +193,7 @@ export default function HomePage() {
 			{/* ── Hero ─────────────────────────────────────────────────────── */}
 			<section
 				id='hero-section'
-				className='relative flex flex-col justify-center min-h-screen overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-800 to-blue-900'>
+				className='relative flex flex-col justify-center min-h-screen overflow-hidden bg-gradient-to-br from-blue-700 via-indigo-600 to-blue-600'>
 				{/* Ambient blobs — blue only */}
 				<div className='absolute top-0 right-0 w-[600px] h-[600px] bg-blue-400/20 rounded-full blur-[140px] pointer-events-none mix-blend-screen' />
 				<div className='absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-400/20 rounded-full blur-[120px] pointer-events-none mix-blend-screen' />
@@ -345,7 +345,7 @@ export default function HomePage() {
 			{/* ── Stats ─────────────────────────────────────────────────────── */}
 			<section
 				id='stats-section'
-				className='relative px-4 py-20 overflow-hidden bg-gradient-to-br from-teal-900 via-emerald-800 to-teal-900 sm:px-6'>
+				className='relative px-4 py-20 overflow-hidden bg-gradient-to-br from-teal-700 via-emerald-600 to-teal-600 sm:px-6'>
 				{/* Ambient blobs — green only */}
 				<div className='absolute top-0 right-0 w-[400px] h-[400px] bg-emerald-400/20 rounded-full blur-[120px] pointer-events-none mix-blend-screen' />
 				<div className='absolute bottom-0 left-0 w-[300px] h-[300px] bg-teal-400/20 rounded-full blur-[100px] pointer-events-none mix-blend-screen' />
@@ -444,7 +444,7 @@ export default function HomePage() {
 			</section>
 
 			{/* ── CTA Banner ───────────────────────────────────────────────── */}
-			<section className='relative px-4 py-24 overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-800 to-blue-900 sm:px-6'>
+			<section className='relative px-4 py-24 overflow-hidden bg-gradient-to-br from-blue-700 via-indigo-600 to-blue-600 sm:px-6'>
 				{/* Blue blobs only */}
 				<div className='absolute top-0 right-0 w-[400px] h-[400px] bg-blue-400/20 rounded-full blur-[120px] pointer-events-none mix-blend-screen' />
 				<div className='absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-400/20 rounded-full blur-[100px] pointer-events-none mix-blend-screen' />

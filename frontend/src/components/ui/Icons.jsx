@@ -346,3 +346,66 @@ export const CloseIcon = () => (
 		<path strokeLinecap='round' d='M6 18L18 6M6 6l12 12' />
 	</svg>
 );
+
+// ── Stream Icons ──────────────────────────────────────────────────────────────
+
+export const PhysicalScienceIcon = ({ className }) => (
+	<svg className={className} fill='none' stroke='currentColor' strokeWidth='1.8' viewBox='0 0 24 24'>
+		<circle cx='12' cy='12' r='3' />
+		<path strokeLinecap='round' d='M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z' opacity='.2' />
+		<ellipse cx='12' cy='12' rx='10' ry='4' />
+		<ellipse cx='12' cy='12' rx='10' ry='4' transform='rotate(60 12 12)' />
+		<ellipse cx='12' cy='12' rx='10' ry='4' transform='rotate(120 12 12)' />
+	</svg>
+);
+
+export const BiologicalScienceIcon = ({ className }) => (
+	<svg className={className} fill='none' stroke='currentColor' strokeWidth='1.8' viewBox='0 0 24 24'>
+		<path
+			strokeLinecap='round'
+			strokeLinejoin='round'
+			d='M9 3C9 3 4 7 4 12s5 9 5 9m6-18s5 4 5 9-5 9-5 9M12 3v18M9 7.5C9 7.5 12 9 15 7.5m-6 4.5C9 12 12 13.5 15 12m-6 4.5C9 16.5 12 18 15 16.5'
+		/>
+	</svg>
+);
+
+export const CommerceStreamIcon = ({ className }) => (
+	<svg className={className} fill='none' stroke='currentColor' strokeWidth='1.8' viewBox='0 0 24 24'>
+		<path
+			strokeLinecap='round'
+			strokeLinejoin='round'
+			d='M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z'
+		/>
+	</svg>
+);
+
+export const EngineeringTechIcon = ({ className }) => (
+	<svg className={className} fill='none' stroke='currentColor' strokeWidth='1.8' viewBox='0 0 24 24'>
+		<path
+			strokeLinecap='round'
+			strokeLinejoin='round'
+			d='M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l5.654-4.654m5.65-4.644a9.09 9.09 0 0 0-1.861-2.012 9.065 9.065 0 0 0-2.012-1.862c-.405-.294-.816-.556-1.234-.779l-1.661 2.032-.086 1.069-.578.79-.745.568-1.08.077-2.022 1.673c.223.418.485.829.779 1.234a9.11 9.11 0 0 0 1.862 2.012 9.09 9.09 0 0 0 2.012 1.861c.405.294.816.556 1.234.779l2.022-1.672 1.08-.077.745-.569.578-.789.086-1.07 1.661-2.031a12.007 12.007 0 0 0-1.234-.779Z'
+		/>
+	</svg>
+);
+
+export const BioSystemsTechIcon = ({ className }) => (
+	<svg className={className} fill='none' stroke='currentColor' strokeWidth='1.8' viewBox='0 0 24 24'>
+		<path
+			strokeLinecap='round'
+			strokeLinejoin='round'
+			d='M12 3c-4.444 0-7 2.239-7 5 0 1.875 1.172 3.502 3 4.5V21h2v-3h4v3h2V12.5c1.828-.998 3-2.625 3-4.5 0-2.761-2.556-5-7-5Z'
+		/>
+		<path strokeLinecap='round' strokeLinejoin='round' d='M9 9h6M9 12h6' />
+	</svg>
+);
+
+export const ArtsStreamIcon = ({ className }) => (
+	<svg className={className} fill='none' stroke='currentColor' strokeWidth='1.8' viewBox='0 0 24 24'>
+		<path
+			strokeLinecap='round'
+			strokeLinejoin='round'
+			d='M4.098 19.902a3.75 3.75 0 0 0 5.304 0l6.401-6.402M6.75 21A3.75 3.75 0 0 1 3 17.25V4.125C3 3.504 3.504 3 4.125 3h5.25c.621 0 1.125.504 1.125 1.125v4.072M6.75 21a3.75 3.75 0 0 0 3.75-3.75V8.197M6.75 21h13.125c.621 0 1.125-.504 1.125-1.125v-5.25c0-.621-.504-1.125-1.125-1.125h-4.072M10.5 8.197l2.88-2.88c.438-.439 1.15-.439 1.59 0l3.712 3.713c.44.44.44 1.152 0 1.59l-2.879 2.88M6.75 17.25h.008v.008H6.75v-.008Z'
+		/>
+	</svg>
+);
