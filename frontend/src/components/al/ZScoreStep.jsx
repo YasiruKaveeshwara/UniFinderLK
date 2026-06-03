@@ -118,7 +118,7 @@ export default function ZScoreStep({ zscore, onChange }) {
 				<InfoIcon className='flex-shrink-0 w-5 h-5' />
 				<p className='text-sm text-slate-600'>
 					<strong className='text-slate-800'>Don't have your Z-score yet?</strong> Hit{" "}
-					<span className='font-semibold text-blue-600'>Skip</span> to explore all courses available in your stream — no
+					<span className='font-semibold text-blue-600'>Skip</span> to explore all courses available in your stream. No
 					Z-score required.
 				</p>
 			</div>

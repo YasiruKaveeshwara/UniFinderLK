@@ -14,6 +14,7 @@ const AppError = require("./src/utils/AppError");
 const authRoutes = require("./src/routes/authRoutes");
 const userRoutes = require("./src/routes/userRoutes");
 const academicRoutes = require("./src/routes/academicRoutes");
+const feedbackRoutes = require("./src/routes/feedbackRoutes");
 
 // ── Load environment variables ────────────────────────────────────────────────
 dotenv.config();
@@ -82,6 +83,7 @@ app.get("/api/health", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/academic", academicRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 // ── 404 handler for undefined routes ──────────────────────────────────────────
 app.all("*", (req, res, next) => {

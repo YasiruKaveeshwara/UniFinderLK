@@ -155,8 +155,7 @@ export default function CourseCard({ course, isEligible = true, isAspirationnal 
 								{Number(zscoreGap.required_cutoff).toFixed(4)}
 							</p>
 							<p className='text-amber-600 text-xs mt-0.5'>
-								Gap: {(Number(zscoreGap.required_cutoff) - Number(zscoreGap.student_zscore)).toFixed(4)} — keep
-								striving!
+								Gap: {(Number(zscoreGap.required_cutoff) - Number(zscoreGap.student_zscore)).toFixed(4)}. Keep striving!
 							</p>
 						</div>
 					</div>

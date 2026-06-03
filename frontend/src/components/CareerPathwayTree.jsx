@@ -236,7 +236,7 @@ export default function CareerPathwayTree({ treeData }) {
 									</div>
 									<div className='flex-1 min-w-0'>
 										<p className='text-[10px] sm:text-xs font-bold tracking-wider sm:tracking-widest uppercase text-amber-900/70 mb-0.5'>
-											AI Recommended — Best Choice
+											AI Recommended. Best Choice.
 										</p>
 										<p className='text-lg font-extrabold break-words sm:text-xl text-amber-900'>{bestChoice}</p>
 									</div>

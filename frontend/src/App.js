@@ -10,12 +10,19 @@ import OLExplorerFlow from "./pages/OLExplorerFlow";
 import OLResultsPage from "./pages/OLResultsPage";
 import ProfilePage from "./pages/ProfilePage";
 import OnboardingPage from "./pages/OnboardingPage";
+import FeedbackPage from "./pages/FeedbackPage";
+import AboutPage from "./pages/AboutPage";
 import PrivateRoute from "./components/PrivateRoute";
 
 function AppContent() {
 	const location = useLocation();
 	const isHomePage = location.pathname === "/";
 	const isOnboarding = location.pathname === "/onboarding";
+
+	// Scroll to top on page navigation
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, [location.pathname]);
 
 	useEffect(() => {
 		if (isHomePage) {
@@ -47,6 +54,8 @@ function AppContent() {
 					/>
 					<Route path='/signin' element={<SignIn />} />
 					<Route path='/signup' element={<SignUp />} />
+					<Route path='/feedback' element={<FeedbackPage />} />
+					<Route path='/about' element={<AboutPage />} />
 					<Route
 						path='/onboarding'
 						element={

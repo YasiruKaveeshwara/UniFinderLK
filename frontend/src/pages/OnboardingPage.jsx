@@ -278,7 +278,7 @@ export default function OnboardingPage() {
 				<div className='flex items-start gap-3 p-3.5 mb-6 border rounded-xl bg-blue-50 border-blue-200/60'>
 					<LightbulbIcon className='w-4 h-4 mt-0.5 text-blue-500 flex-shrink-0' />
 					<p className='text-sm text-blue-700'>
-						Every step is <strong>optional</strong> — skip anything you don't have yet. You can always update your
+						Every step is <strong>optional</strong>. Skip anything you don't have yet. You can always update your
 						profile later.
 					</p>
 				</div>

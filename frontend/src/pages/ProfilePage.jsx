@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
@@ -11,15 +11,13 @@ import {
 	signout,
 } from "../redux/User/userSlice";
 import { updateUserProfile, deleteUserAccount } from "../api/userApi";
-import {
-	SpinnerIcon,
-	AlertCircleIcon,
-	CheckCircleIcon,
-	UserIcon,
-} from "../components/ui/Icons";
+import { SpinnerIcon, AlertCircleIcon, CheckCircleIcon, UserIcon } from "../components/ui/Icons";
 import Reveal from "../components/ui/Reveal";
 import OLSubjectsCard from "../components/profile/OLSubjectsCard";
 import ALSubjectsCard from "../components/profile/ALSubjectsCard";
+import StarRating from "../components/feedback/StarRating";
+import FeedbackCard from "../components/feedback/FeedbackCard";
+import { getMyFeedback, updateFeedback, deleteFeedback } from "../api/feedbackApi";
 
 export default function ProfilePage() {
 	const dispatch = useDispatch();
@@ -37,6 +35,54 @@ export default function ProfilePage() {
 	const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+	// ── My Feedback state ────────────────────────────────────────────────────
+	const [myFeedbacks, setMyFeedbacks] = useState([]);
+	const [fbLoading, setFbLoading] = useState(true);
+	const [editingFb, setEditingFb] = useState(null); // feedback being edited
+	const [editForm, setEditForm] = useState({ rating: 0, message: "", section: "general", isAnonymous: false });
+	const [editSaving, setEditSaving] = useState(false);
+	const [editError, setEditError] = useState("");
+	const [deleteConfirmId, setDeleteConfirmId] = useState(null);
+
+	const loadMyFeedback = useCallback(async () => {
+		setFbLoading(true);
+		try {
+			const res = await getMyFeedback();
+			setMyFeedbacks(res.data || []);
+		} catch (_) {}
+		setFbLoading(false);
+	}, []);
+
+	useEffect(() => {
+		loadMyFeedback();
+	}, [loadMyFeedback]);
+
+	const handleEditSave = async () => {
+		if (!editingFb) return;
+		if (editForm.message.trim().length < 10) {
+			setEditError("Feedback must be at least 10 characters.");
+			return;
+		}
+		setEditSaving(true);
+		setEditError("");
+		try {
+			await updateFeedback(editingFb._id, editForm);
+			setEditingFb(null);
+			loadMyFeedback();
+		} catch (e) {
+			setEditError(e.message || "Failed to update.");
+		}
+		setEditSaving(false);
+	};
+
+	const handleDeleteFb = async (id) => {
+		try {
+			await deleteFeedback(id);
+			setDeleteConfirmId(null);
+			loadMyFeedback();
+		} catch (_) {}
+	};
 
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -363,6 +409,153 @@ export default function ProfilePage() {
 				{/* ── A/L Details ── */}
 				<Reveal delay={0.25}>
 					<ALSubjectsCard />
+				</Reveal>
+
+				{/* ── My Feedback ── */}
+				<Reveal delay={0.3}>
+					<div className='p-6 bg-white border shadow-sm border-amber-100 rounded-2xl sm:p-8'>
+						{/* Header */}
+						<div className='flex items-center gap-3 mb-5'>
+							<div>
+								<h3 className='text-lg font-bold text-slate-900'>My Feedback</h3>
+								<p className='text-xs text-slate-400'>Your submitted reviews</p>
+							</div>
+						</div>
+
+						{fbLoading ?
+							<div className='flex items-center gap-2 py-6 text-slate-400'>
+								<SpinnerIcon className='w-4 h-4 animate-spin' />
+								<span className='text-xs'>Loading your feedback...</span>
+							</div>
+						: myFeedbacks.length === 0 ?
+							<div className='flex flex-col items-center gap-3 py-8 text-center'>
+								<div className='flex items-center justify-center w-12 h-12 border rounded-2xl bg-amber-50 border-amber-100'>
+									<svg className='w-6 h-6 text-amber-300' fill='currentColor' viewBox='0 0 24 24'>
+										<path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' />
+									</svg>
+								</div>
+								<p className='text-sm font-semibold text-slate-600'>No feedback submitted yet</p>
+								<p className='text-xs text-slate-400'>
+									Share your experience on the{" "}
+									<a href='/feedback' className='font-semibold text-amber-600 hover:underline'>
+										Feedback page
+									</a>
+									.
+								</p>
+							</div>
+						:	<div className='space-y-3'>
+								{myFeedbacks.map((fb) => (
+									<div key={fb._id}>
+										{editingFb?._id === fb._id ?
+											/* Inline edit form */
+											<div className='p-4 space-y-3 border border-amber-200 rounded-2xl bg-amber-50/40'>
+												<div className='flex items-center justify-between'>
+													<p className='text-xs font-bold text-amber-700'>Editing Feedback</p>
+													<button
+														type='button'
+														onClick={() => setEditingFb(null)}
+														className='text-xs text-slate-500 hover:text-slate-700'>
+														Cancel
+													</button>
+												</div>
+												<div>
+													<label className='block mb-1.5 text-xs font-bold text-slate-700'>Rating</label>
+													<StarRating
+														value={editForm.rating}
+														onChange={(v) => setEditForm((p) => ({ ...p, rating: v }))}
+														size='md'
+													/>
+												</div>
+												<div>
+													<label className='block mb-1.5 text-xs font-bold text-slate-700'>Section</label>
+													<div className='flex flex-wrap gap-2'>
+														{[
+															{ id: "general", label: "General" },
+															{ id: "ol_system", label: "O/L System" },
+															{ id: "al_system", label: "A/L System" },
+														].map((s) => (
+															<button
+																key={s.id}
+																type='button'
+																onClick={() => setEditForm((p) => ({ ...p, section: s.id }))}
+																className={`px-3 py-1 text-xs font-bold rounded-xl border transition-colors ${editForm.section === s.id ? "bg-amber-500 text-white border-amber-500" : "bg-white text-slate-600 border-slate-200 hover:border-amber-300"}`}>
+																{s.label}
+															</button>
+														))}
+													</div>
+												</div>
+												<div>
+													<label className='block mb-1.5 text-xs font-bold text-slate-700'>Message</label>
+													<textarea
+														rows={3}
+														value={editForm.message}
+														onChange={(e) => setEditForm((p) => ({ ...p, message: e.target.value }))}
+														className='w-full px-3 py-2 text-sm bg-white border resize-none border-slate-200 rounded-xl focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 focus:outline-none'
+													/>
+												</div>
+												<label className='flex items-center gap-2 cursor-pointer'>
+													<input
+														type='checkbox'
+														checked={editForm.isAnonymous}
+														onChange={(e) => setEditForm((p) => ({ ...p, isAnonymous: e.target.checked }))}
+														className='rounded accent-amber-500'
+													/>
+													<span className='text-xs font-semibold text-slate-600'>Submit as Anonymous</span>
+												</label>
+												{editError && <p className='text-xs font-medium text-red-600'>{editError}</p>}
+												<div className='flex gap-2'>
+													<button
+														type='button'
+														onClick={handleEditSave}
+														disabled={editSaving}
+														className='px-4 py-2 text-xs font-bold text-white transition-opacity bg-gradient-to-r from-amber-500 to-orange-500 rounded-xl hover:opacity-90 disabled:opacity-50'>
+														{editSaving ? "Saving..." : "Save Changes"}
+													</button>
+													<button
+														type='button'
+														onClick={() => setEditingFb(null)}
+														className='px-4 py-2 text-xs font-semibold transition-colors bg-white border text-slate-600 border-slate-200 rounded-xl hover:bg-slate-50'>
+														Cancel
+													</button>
+												</div>
+											</div>
+										:	<FeedbackCard
+												feedback={{ ...fb, name: fb.isAnonymous ? "Anonymous" : currentUser.name || "You" }}
+												owned
+												onEdit={() => {
+													setEditingFb(fb);
+													setEditForm({
+														rating: fb.rating,
+														message: fb.message,
+														section: fb.section,
+														isAnonymous: fb.isAnonymous,
+													});
+													setEditError("");
+												}}
+												onDelete={() => setDeleteConfirmId(fb._id)}
+											/>
+										}
+										{/* Delete confirmation */}
+										{deleteConfirmId === fb._id && (
+											<div className='flex items-center gap-3 px-4 py-3 mt-1 border border-red-200 rounded-xl bg-red-50'>
+												<p className='flex-1 text-xs font-medium text-red-700'>Delete this feedback?</p>
+												<button
+													onClick={() => handleDeleteFb(fb._id)}
+													className='px-3 py-1 text-xs font-bold text-white transition-colors bg-red-500 rounded-lg hover:bg-red-600'>
+													Delete
+												</button>
+												<button
+													onClick={() => setDeleteConfirmId(null)}
+													className='px-3 py-1 text-xs font-semibold transition-colors bg-white border rounded-lg text-slate-600 border-slate-200 hover:bg-slate-50'>
+													Cancel
+												</button>
+											</div>
+										)}
+									</div>
+								))}
+							</div>
+						}
+					</div>
 				</Reveal>
 
 				{/* ── Account Info ── */}

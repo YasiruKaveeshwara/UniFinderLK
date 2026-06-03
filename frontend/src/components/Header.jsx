@@ -15,9 +15,10 @@ export default function Header() {
 	const isLoggedIn = Boolean(currentUser);
 	const API_BASE = process.env.REACT_APP_BACKEND_URL;
 
-	// Close mobile menu on route change
+	// Close mobile menu and reset scroll state on route change
 	useEffect(() => {
 		setMobileMenuOpen(false);
+		setScrolled(false);
 	}, [location.pathname]);
 
 	// Scroll detection
@@ -41,6 +42,8 @@ export default function Header() {
 	const navLinks = [
 		{ label: "A/L Streams", href: "/degree-recommendations/al-students" },
 		{ label: "O/L Explorer", href: "/degree-recommendations/all-students" },
+		{ label: "Feedback", href: "/feedback" },
+		{ label: "About", href: "/about" },
 	];
 
 	const isActive = (path) => location.pathname === path;
@@ -51,6 +54,8 @@ export default function Header() {
 		"/degree-recommendations/all-students",
 		"/degree-recommendations/al-students",
 		"/profile",
+		"/feedback",
+		"/about",
 	];
 	const hasDarkHero = DARK_HERO_PAGES.includes(location.pathname);
 	const atTop = hasDarkHero && !scrolled;

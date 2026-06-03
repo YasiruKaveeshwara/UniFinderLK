@@ -12,6 +12,7 @@ export default function Footer() {
 				{ label: "Home", href: "/" },
 				{ label: "O/L Stream Explorer", href: "/degree-recommendations/all-students" },
 				{ label: "A/L Degree Finder", href: "/degree-recommendations/al-students" },
+				{ label: "Feedback", href: "/feedback" },
 				{ label: "My Profile", href: "/profile" },
 			],
 		},
@@ -25,13 +26,11 @@ export default function Footer() {
 			],
 		},
 		{
-			heading: "Legal",
+			heading: "About",
 			color: "text-blue-500",
 			links: [
-				{ label: "Privacy Policy", href: "/privacy-policy" },
-				{ label: "Terms of Service", href: "/terms-of-service" },
-				{ label: "Cookie Policy", href: "/cookie-policy" },
-				{ label: "Accessibility", href: "/accessibility" },
+				{ label: "About UniFinderLK", href: "/about" },
+				{ label: "Contact", href: "/about" },
 			],
 		},
 	];
@@ -52,7 +51,7 @@ export default function Footer() {
 						</Link>
 
 						<p className='max-w-xs text-xs leading-relaxed text-slate-500'>
-							Discover the right university degree for your academic profile. Powered by real UGC data and AI matching —
+							Discover the right university degree for your academic profile. Powered by real UGC data and AI matching,
 							built for Sri Lankan students.
 						</p>
 					</div>
@@ -77,9 +76,17 @@ export default function Footer() {
 				</div>
 
 				{/* Bottom bar */}
-				<div className='flex flex-col items-center justify-between gap-2 py-3 text-xs border-t border-slate-100 sm:flex-row'>
+				<div className='flex flex-col gap-1.5 py-3 text-xs border-t border-slate-100 sm:flex-row sm:items-center sm:justify-between'>
 					<p className='text-slate-400 text-[11px]'>
 						&copy; {year} <span className='font-semibold text-slate-600'>UniFinderLK</span>. All rights reserved.
+					</p>
+					<p className='text-[11px] text-slate-400'>
+						Designed and built by{" "}
+						<a
+							href='mailto:kaveeshwaray@gmail.com'
+							className='font-semibold no-underline transition-colors text-slate-600 hover:text-blue-600'>
+							Yasiru Kaveeshwara
+						</a>
 					</p>
 					<div className='flex items-center gap-1.5 text-slate-400 text-[11px]'>
 						<span className='inline-block w-1.5 h-1.5 rounded-full bg-blue-500' />

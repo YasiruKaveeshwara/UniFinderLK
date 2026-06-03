@@ -33,7 +33,7 @@ function StepCard({ step, index }) {
 function FeatureCard({ icon, title, description, accentFrom, accentTo, shadowColor, borderHover }) {
 	return (
 		<div
-			className={`flex gap-5 p-7 transition-all duration-300 border group rounded-2xl border-slate-200/80 bg-white hover:shadow-xl hover:-translate-y-0.5 ${borderHover}`}>
+			className={`flex gap-5 px-4 pt-4 transition-all duration-300 border group rounded-2xl border-slate-200/80 bg-white hover:shadow-xl hover:-translate-y-0.5 ${borderHover}`}>
 			<div
 				className={`flex items-center justify-center flex-shrink-0 w-12 h-12 text-white transition-transform duration-300 shadow-md bg-gradient-to-br ${accentFrom} ${accentTo} rounded-xl group-hover:scale-110 ${shadowColor}`}>
 				{icon}
@@ -123,7 +123,8 @@ export default function HomePage() {
 	const steps = [
 		{
 			title: "Select Your Pathway",
-			description: "Whether you are an O/L student exploring streams or an A/L student checking degree eligibility, choose your path and get started.",
+			description:
+				"Whether you are an O/L student exploring streams or an A/L student checking degree eligibility, choose your path and get started.",
 		},
 		{
 			title: "Enter Your Details",
@@ -153,7 +154,8 @@ export default function HomePage() {
 		{
 			icon: <ChartBarIcon className='w-6 h-6' />,
 			title: "Real UGC Data",
-			description: "Powered by actual UGC cutoff scores, eligibility rules, and subject requirements. No guesswork involved.",
+			description:
+				"Powered by actual UGC cutoff scores, eligibility rules, and subject requirements. No guesswork involved.",
 			accentFrom: "from-emerald-600",
 			accentTo: "to-emerald-500",
 			shadowColor: "shadow-emerald-500/25",
@@ -224,7 +226,7 @@ export default function HomePage() {
 						{/* Subtitle */}
 						<Reveal delay={0.35}>
 							<p className='max-w-2xl mx-auto mb-10 text-lg leading-relaxed text-white/75'>
-								Whether you're finishing O/Ls or ready with A/L results — our intelligent system maps out exactly which
+								Whether you are finishing O/Ls or ready with A/L results, our intelligent system maps out exactly which
 								degree programs fit your profile, stream, and interests.
 							</p>
 						</Reveal>
@@ -386,7 +388,7 @@ export default function HomePage() {
 								</span>
 							</h2>
 							<p className='max-w-2xl mx-auto text-lg text-slate-500'>
-								A few simple inputs — clear, ranked degree recommendations in seconds.
+								A few simple inputs. Clear, ranked degree recommendations in seconds.
 							</p>
 						</div>
 					</Reveal>
@@ -425,7 +427,7 @@ export default function HomePage() {
 						</div>
 					</Reveal>
 
-					<div className='grid grid-cols-1 gap-5 md:grid-cols-2'>
+					<div className='grid grid-cols-1 gap-3 md:grid-cols-2'>
 						{features.map((feature, index) => (
 							<Reveal key={feature.title} delay={0.1 + index * 0.1} direction={index % 2 === 0 ? "left" : "right"}>
 								<FeatureCard

@@ -29,7 +29,7 @@ export default function StreamSelector({ formData, setFormData, subjectRuleError
 				<p className='mb-1 text-xs font-bold tracking-widest text-blue-600 uppercase'>Step 1 of 3</p>
 				<h2 className='mb-1 text-2xl font-extrabold tracking-tight text-slate-900'>Choose Your A/L Stream</h2>
 				<p className='text-sm text-slate-500'>
-					Select the stream you're studying — subjects will update automatically.
+					Select the stream you are studying. Subjects will update automatically.
 				</p>
 			</div>
 

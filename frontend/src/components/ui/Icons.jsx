@@ -400,6 +400,106 @@ export const BioSystemsTechIcon = ({ className }) => (
 	</svg>
 );
 
+// ── Contact / Communication ───────────────────────────────────────────────────
+
+export const EmailIcon = ({ className }) => (
+	<svg className={className} fill='none' stroke='currentColor' strokeWidth='2' viewBox='0 0 24 24'>
+		<path
+			strokeLinecap='round'
+			strokeLinejoin='round'
+			d='M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75'
+		/>
+	</svg>
+);
+
+// ── About / Mission ───────────────────────────────────────────────────────────
+
+export const MissionIcon = ({ className }) => (
+	<svg className={className} fill='none' stroke='currentColor' strokeWidth='2' viewBox='0 0 24 24'>
+		<path
+			strokeLinecap='round'
+			strokeLinejoin='round'
+			d='M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+		/>
+	</svg>
+);
+
+export const AccuracyIcon = ({ className }) => (
+	<svg className={className} fill='none' stroke='currentColor' strokeWidth='2' viewBox='0 0 24 24'>
+		<path
+			strokeLinecap='round'
+			strokeLinejoin='round'
+			d='M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z'
+		/>
+	</svg>
+);
+
+export const FreeIcon = ({ className }) => (
+	<svg className={className} fill='none' stroke='currentColor' strokeWidth='2' viewBox='0 0 24 24'>
+		<path
+			strokeLinecap='round'
+			strokeLinejoin='round'
+			d='M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33'
+		/>
+	</svg>
+);
+
+export const PrivacyIcon = ({ className }) => (
+	<svg className={className} fill='none' stroke='currentColor' strokeWidth='2' viewBox='0 0 24 24'>
+		<path
+			strokeLinecap='round'
+			strokeLinejoin='round'
+			d='M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z'
+		/>
+	</svg>
+);
+
+export const WarningTriangleIcon = ({ className }) => (
+	<svg className={className} fill='none' stroke='currentColor' strokeWidth='2' viewBox='0 0 24 24'>
+		<path
+			strokeLinecap='round'
+			strokeLinejoin='round'
+			d='M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126z'
+		/>
+	</svg>
+);
+
+// ── Feedback / Rating ─────────────────────────────────────────────────────────
+
+export const StarFilledIcon = ({ className }) => (
+	<svg className={className} fill='currentColor' viewBox='0 0 24 24'>
+		<path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' />
+	</svg>
+);
+
+export const PencilEditIcon = ({ className }) => (
+	<svg className={className} fill='none' stroke='currentColor' strokeWidth='2' viewBox='0 0 24 24'>
+		<path
+			strokeLinecap='round'
+			strokeLinejoin='round'
+			d='M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z'
+		/>
+	</svg>
+);
+
+// ── People ────────────────────────────────────────────────────────────────────
+
+export const CreatorIcon = ({ className }) => (
+	<svg className={className} fill='none' stroke='currentColor' strokeWidth='2' viewBox='0 0 24 24'>
+		<path
+			strokeLinecap='round'
+			strokeLinejoin='round'
+			d='M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z'
+		/>
+	</svg>
+);
+
+export const LinkedInIcon = ({ className }) => (
+	<svg className={className} fill='currentColor' viewBox='0 0 24 24'>
+		<path d='M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z' />
+	</svg>
+);
+
 export const ArtsStreamIcon = ({ className }) => (
 	<svg className={className} fill='none' stroke='currentColor' strokeWidth='1.8' viewBox='0 0 24 24'>
 		<path
