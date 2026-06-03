@@ -16,8 +16,6 @@ import {
 	AlertCircleIcon,
 	CheckCircleIcon,
 	UserIcon,
-	LockIcon,
-	ArrowRightIcon,
 } from "../components/ui/Icons";
 import Reveal from "../components/ui/Reveal";
 import OLSubjectsCard from "../components/profile/OLSubjectsCard";

@@ -7,7 +7,7 @@ export default function InterestsStep({ interests, onChange }) {
 	return (
 		<div className='space-y-6'>
 			<div>
-				<p className='mb-1 text-xs font-bold tracking-widest text-blue-600 uppercase'>Step 3 of 3 — Optional</p>
+				<p className='mb-1 text-xs font-bold tracking-widest text-blue-600 uppercase'>Step 3 of 3 (Optional)</p>
 				<h2 className='mb-1 text-2xl font-extrabold tracking-tight text-slate-900'>What Are Your Career Goals?</h2>
 				<p className='text-sm text-slate-500'>
 					Tell us your interests and our AI will personalize degree recommendations specifically for you.

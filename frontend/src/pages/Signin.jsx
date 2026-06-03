@@ -254,7 +254,7 @@ export default function SignIn() {
 
 							<div className='flex items-center gap-3 mt-8'>
 								<GraduationIcon className='w-4 h-4 text-slate-300' />
-								<span className='text-xs text-slate-400'>UniFinderLK — AI-powered degree recommendations</span>
+								<span className='text-xs text-slate-400'>UniFinderLK, AI-powered degree recommendations</span>
 							</div>
 						</div>
 					</div>

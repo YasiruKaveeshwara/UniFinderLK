@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { fetchAllDegreeCourses, fetchOLCareerTree } from "../api/DegreeAPI";
@@ -77,6 +77,7 @@ export default function OLExplorerFlow() {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
 	const [autofilled, setAutofilled] = useState(false);
+	const detailsRef = useRef(null); // ref to auto-open accordion
 
 	// ── Autofill from saved profile ──────────────────────────────────────────
 	useEffect(() => {
@@ -86,6 +87,13 @@ export default function OLExplorerFlow() {
 			try {
 				const res = await fetchAcademicProfile();
 				const ol = res.data?.olSubjects;
+				const al = res.data?.alSubjects;
+
+				// Pre-fill interests from saved AL profile if present
+				if (al?.interests) {
+					setInterests(al.interests);
+				}
+
 				if (!ol) return;
 
 				// Check if there's any saved data to autofill
@@ -110,6 +118,11 @@ export default function OLExplorerFlow() {
 					bucket_3: ol.bucket_3 || "",
 				});
 				setAutofilled(true);
+
+				// Auto-open the O/L marks accordion so the user sees their pre-filled data
+				if (detailsRef.current) {
+					detailsRef.current.open = true;
+				}
 			} catch (_) {
 				// Silently fail — autofill is a convenience, not critical
 			}
@@ -260,7 +273,7 @@ export default function OLExplorerFlow() {
 										</span>
 									)}
 								</div>
-								<details className='mb-2 overflow-hidden transition-all border group border-slate-200 rounded-2xl bg-slate-50 hover:border-emerald-200'>
+								<details ref={detailsRef} className='mb-2 overflow-hidden transition-all border group border-slate-200 rounded-2xl bg-slate-50 hover:border-emerald-200'>
 									<summary className='flex items-center gap-3 px-3 py-4 font-semibold cursor-pointer select-none text-slate-700 hover:text-slate-900'>
 										<div className='flex items-center justify-center w-8 rounded-lg bg-emerald-100 text-emerald-600'>
 											<BookIcon />

@@ -84,9 +84,6 @@ export default function ALSubjectsCard() {
 			profile.alSubjects?.district ||
 			profile.alSubjects?.zscore !== null);
 
-	// Find stream color accents from AL_STREAMS config
-	const selectedStreamObj = AL_STREAMS.find((s) => s.name === (profile?.alSubjects?.stream || stream));
-
 	if (!currentUser) return null;
 
 	if (loadingFetch) {

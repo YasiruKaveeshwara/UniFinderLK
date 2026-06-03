@@ -48,7 +48,7 @@ export default function ZScoreStep({ zscore, onChange }) {
 		<div className='space-y-6'>
 			{/* Header */}
 			<div>
-				<p className='mb-1 text-xs font-bold tracking-widest text-blue-600 uppercase'>Step 2 of 3 — Optional</p>
+				<p className='mb-1 text-xs font-bold tracking-widest text-blue-600 uppercase'>Step 2 of 3 (Optional)</p>
 				<h2 className='mb-1 text-2xl font-extrabold tracking-tight text-slate-900'>What's Your Z-Score?</h2>
 				<p className='text-sm text-slate-500'>
 					Enter your A/L Z-score to see only courses you're eligible for. You can skip and view all courses.
@@ -100,10 +100,10 @@ export default function ZScoreStep({ zscore, onChange }) {
 							: "text-slate-400"
 						}`}>
 						{isValid ?
-							"Z-Score recorded — we'll filter courses you're eligible for."
+							"Z-Score saved. We will filter courses you are eligible for."
 						: zscore !== "" && zscore !== "-" ?
-							"Value must be between −3.0000 and +3.0000."
-						:	"Range: −3.0000 to +3.0000, up to 4 decimal places"}
+							"Value must be between -3.0000 and +3.0000."
+						:	"Range: -3.0000 to +3.0000, up to 4 decimal places"}
 					</p>
 					{zscore !== "" && zscore !== "-" && (
 						<p className={`text-xs font-semibold tabular-nums ${isValid ? "text-blue-600" : "text-red-500"}`}>

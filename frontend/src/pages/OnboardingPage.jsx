@@ -234,7 +234,7 @@ export default function OnboardingPage() {
 					</div>
 					<div>
 						<h2 className='text-2xl font-extrabold tracking-tight text-slate-900'>Welcome, {firstName}</h2>
-						<p className='text-sm text-slate-500'>Let's set up your academic profile — takes about 2 minutes.</p>
+						<p className='text-sm text-slate-500'>Set up your academic profile in about 2 minutes.</p>
 					</div>
 				</div>
 

@@ -123,7 +123,7 @@ export default function HomePage() {
 	const steps = [
 		{
 			title: "Select Your Pathway",
-			description: "O/L student exploring streams or A/L student checking degree eligibility — choose your path.",
+			description: "Whether you are an O/L student exploring streams or an A/L student checking degree eligibility, choose your path and get started.",
 		},
 		{
 			title: "Enter Your Details",
@@ -144,7 +144,7 @@ export default function HomePage() {
 			icon: <LightbulbIcon className='w-6 h-6' />,
 			title: "Smart AI Matching",
 			description:
-				"Advanced NLP analyses your interests and maps them to the most relevant degree programs across all Sri Lankan universities.",
+				"Advanced NLP analyzes your interests and maps them to the most relevant degree programs across all Sri Lankan universities.",
 			accentFrom: "from-blue-600",
 			accentTo: "to-indigo-600",
 			shadowColor: "shadow-blue-500/25",
@@ -153,7 +153,7 @@ export default function HomePage() {
 		{
 			icon: <ChartBarIcon className='w-6 h-6' />,
 			title: "Real UGC Data",
-			description: "Powered by actual UGC cutoff scores, eligibility rules, and subject requirements — not guesswork.",
+			description: "Powered by actual UGC cutoff scores, eligibility rules, and subject requirements. No guesswork involved.",
 			accentFrom: "from-emerald-600",
 			accentTo: "to-emerald-500",
 			shadowColor: "shadow-emerald-500/25",
