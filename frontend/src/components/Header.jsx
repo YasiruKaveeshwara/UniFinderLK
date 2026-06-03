@@ -46,7 +46,12 @@ export default function Header() {
 	const isActive = (path) => location.pathname === path;
 
 	// Pages that have a dark hero — header should be transparent at the top
-	const DARK_HERO_PAGES = ["/", "/degree-recommendations/all-students", "/degree-recommendations/al-students"];
+	const DARK_HERO_PAGES = [
+		"/",
+		"/degree-recommendations/all-students",
+		"/degree-recommendations/al-students",
+		"/profile",
+	];
 	const hasDarkHero = DARK_HERO_PAGES.includes(location.pathname);
 	const atTop = hasDarkHero && !scrolled;
 
