@@ -159,6 +159,8 @@ GitHub Actions workflows are included for all three services:
 - Frontend workflow installs dependencies, builds the React app with production URLs, then deploys to Vercel.
 - Backend workflow triggers a Render deploy hook.
 - Degree-service workflow clones the Hugging Face Space repo, syncs the `degree-service` folder, commits, and pushes changes.
+- The Hugging Face sync intentionally excludes `data/embeddings.npy` because Spaces rejects that binary file in a normal git push.
+- The degree service can still run without that file because it falls back to on-the-fly embedding generation.
 
 ### GitHub secrets required
 
