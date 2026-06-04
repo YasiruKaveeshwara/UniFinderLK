@@ -38,8 +38,16 @@ def create_app() -> FastAPI:
     app.include_router(recommend_router, prefix="/recommend", tags=["Recommendation"])
     app.include_router(courses_router, prefix="/api", tags=["Courses"])
 
+    @app.get("/", tags=["Health"])
+    def root_check():
+        return {"status": "ok", "service": "UniFinder Degree Recommendation Service"}
+
     @app.get("/health", tags=["Health"])
     def health_check():
+        return {"status": "ok"}
+
+    @app.get("/favicon.ico", include_in_schema=False)
+    def favicon():
         return {"status": "ok"}
 
     return app
