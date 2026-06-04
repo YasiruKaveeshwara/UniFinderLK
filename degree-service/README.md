@@ -1,3 +1,14 @@
+---
+title: UniFinderLK Degree Service
+emoji: 🎓
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 5001
+pinned: false
+startup_duration_timeout: 1h
+---
+
 # Degree Recommendation Service (FastAPI)
 
 This service recommends Sri Lankan university degree programs based on:
