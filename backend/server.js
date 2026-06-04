@@ -75,6 +75,10 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 // ── Health check ──────────────────────────────────────────────────────────────
+app.get("/", (req, res) => {
+	res.status(200).json({ status: "ok", service: "unifinderlk-backend" });
+});
+
 app.get("/api/health", (req, res) => {
 	res.status(200).json({ status: "ok", service: "unifinderlk-backend" });
 });

@@ -4,7 +4,6 @@ FROM node:20-alpine
 WORKDIR /app
 
 ENV NODE_ENV=production
-ENV PORT=5000
 
 # Copy package files first for better caching
 COPY package*.json ./
