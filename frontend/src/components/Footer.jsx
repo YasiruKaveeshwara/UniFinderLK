@@ -46,13 +46,13 @@ export default function Footer() {
 					{/* Brand column */}
 					<div className='space-y-2.5 md:col-span-2 lg:col-span-1'>
 						<Link to='/' className='flex items-center gap-2 no-underline group w-fit'>
-							<LogoMark className='transition-transform duration-300 w-7 h-7 group-hover:scale-105' />
-							<span className='text-base font-extrabold tracking-tight text-slate-900'>UniFinderLK</span>
+							<LogoMark className='w-12 h-12 transition-transform duration-300 group-hover:scale-105' />
+							<div className='flex flex-col'>
+								<span className='text-2xl font-extrabold tracking-tight text-slate-900'>UniFinderLK</span>
+							</div>
 						</Link>
-
 						<p className='max-w-xs text-xs leading-relaxed text-slate-500'>
-							Discover the right university degree for your academic profile. Powered by real UGC data and AI matching,
-							built for Sri Lankan students.
+							AI degree recommendations for Sri Lankan students
 						</p>
 					</div>
 
@@ -91,9 +91,6 @@ export default function Footer() {
 					<div className='flex items-center gap-1.5 text-slate-400 text-[11px]'>
 						<span className='inline-block w-1.5 h-1.5 rounded-full bg-blue-500' />
 						<span>AI-powered</span>
-						<span className='mx-1 text-slate-200'>·</span>
-						<span className='inline-block w-1.5 h-1.5 rounded-full bg-indigo-500' />
-						<span>UGC-verified</span>
 						<span className='mx-1 text-slate-200'>·</span>
 						<span className='inline-block w-1.5 h-1.5 rounded-full bg-blue-400' />
 						<span>Private by design</span>

@@ -45,8 +45,8 @@ export default function AboutPage() {
 				<div className='absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-400/20 rounded-full blur-[120px] pointer-events-none mix-blend-screen' />
 
 				<div className='relative z-10 max-w-4xl px-6 mx-auto text-center'>
-					<div className='inline-flex items-center gap-2 px-4 py-1.5 mb-5 text-xs font-bold tracking-widest uppercase rounded-full bg-white/15 text-blue-100 border border-blue-300/40'>
-						<LogoMark className='w-4 h-4' />
+					<div className='inline-flex items-center gap-2 px-4 py-1 mb-5 text-xs font-bold tracking-widest text-blue-100 uppercase border rounded-full bg-white/15 border-blue-300/40'>
+						<LogoMark variant='white' className='w-6 h-6' />
 						<span>About UniFinderLK</span>
 					</div>
 					<h1 className='mb-4 text-4xl font-extrabold tracking-tight text-white sm:text-5xl'>
