@@ -10,6 +10,8 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
+// Ensure the browser tab shows the site name by default
+document.title = "UniFinderLK";
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<Provider store={store}>
 		<PersistGate persistor={persistor} loading={null}>
