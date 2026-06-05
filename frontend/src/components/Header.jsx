@@ -77,9 +77,12 @@ export default function Header() {
 				<div className='flex items-center justify-between h-16'>
 					{/* Logo */}
 					<Link to='/' className='flex items-center gap-2.5 no-underline group'>
-						<LogoMark className='transition-transform duration-300 w-9 h-9 group-hover:scale-105' />
+						<LogoMark
+							variant={atTop ? "white" : "blue"}
+							className='w-12 h-12 transition-transform duration-300 group-hover:scale-105'
+						/>
 						<span
-							className={`text-lg font-bold tracking-tight transition-colors duration-300 ${atTop ? "text-white" : "text-slate-900"}`}>
+							className={`text-2xl font-bold tracking-tight transition-colors duration-300 ${atTop ? "text-white" : "text-slate-900"}`}>
 							UniFinderLK
 						</span>
 					</Link>

@@ -331,9 +331,26 @@ export const ScrollDownIcon = ({ className }) => (
 	</svg>
 );
 
-export const LogoMark = ({ className = "w-8 h-8" }) => (
-	<img src='/favicon.png' alt='UniFinderLK Logo' className={`${className} object-contain`} />
-);
+export const LogoMark = ({ className = "w-8 h-8", variant = "blue" }) => {
+	const isWhite = variant === "white";
+
+	return (
+		<span className={`relative inline-block ${className}`} role='img' aria-label='UniFinderLK Logo'>
+			<img
+				src='/UniFinderLK%20Logo%20Blue.svg'
+				alt=''
+				aria-hidden='true'
+				className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 ease-in-out ${isWhite ? "opacity-0" : "opacity-100"}`}
+			/>
+			<img
+				src='/UniFinderLK%20Logo%20White.svg'
+				alt=''
+				aria-hidden='true'
+				className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 ease-in-out ${isWhite ? "opacity-100" : "opacity-0"}`}
+			/>
+		</span>
+	);
+};
 
 export const MenuIcon = () => (
 	<svg className='w-5 h-5' fill='none' stroke='currentColor' strokeWidth='2' viewBox='0 0 24 24'>
